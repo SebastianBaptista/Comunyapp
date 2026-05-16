@@ -118,17 +118,31 @@ async function startServer() {
   // ──────────────────────────────────────────────
   // POSTS
   // ──────────────────────────────────────────────
-  app.get("/api/posts", async (_req, res) => {
-    const { data, error } = await supabase
+  app.get("/api/posts", async (req, res) => {
+    const limit = Math.min(Number(req.query.limit) || 10, 50);
+    const cursor = req.query.cursor as string | undefined;
+
+    let query = supabase
       .from("posts")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (cursor) {
+      query = query.lt("created_at", cursor);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("Error fetching posts:", error.message);
       return res.status(500).json({ error: error.message });
     }
-    res.json(data ?? []);
+
+    const posts = data ?? [];
+    const nextCursor = posts.length === limit ? posts[posts.length - 1].created_at : null;
+
+    res.json({ posts, nextCursor });
   });
 
   app.post("/api/posts", async (req, res) => {

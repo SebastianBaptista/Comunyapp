@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { usePosts } from "../hooks/usePosts";
 import CreatePost from "./CreatePost";
 import PostCard from "./PostCard";
 import Spinner from "../../../shared/ui/Spinner";
 
 export default function PostFeed() {
-  const { posts, isLoading, createPost } = usePosts();
+  const { posts, isLoading, isLoadingMore, hasMore, loadMore, createPost } = usePosts();
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef(loadMore);
+
+  // Keep ref in sync without re-creating the observer
+  useEffect(() => { loadMoreRef.current = loadMore; });
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) loadMoreRef.current(); },
+      { rootMargin: "400px" } // preload 400px antes de llegar al fondo
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   if (isLoading) return <Spinner />;
 
@@ -49,9 +67,25 @@ export default function PostFeed() {
       {/* Main Feed */}
       <div className="lg:col-span-8 space-y-6">
         <CreatePost onSubmit={createPost} />
+
         {posts.map((post, idx) => (
           <PostCard key={post.id} post={post} index={idx} />
         ))}
+
+        {/* Sentinel: el observer dispara loadMore cuando este div entra en vista */}
+        <div ref={sentinelRef} />
+
+        {isLoadingMore && (
+          <div className="flex justify-center py-4">
+            <div className="w-6 h-6 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+
+        {!hasMore && posts.length > 0 && (
+          <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest py-4">
+            Has visto todos los posts
+          </p>
+        )}
       </div>
 
       {/* Sidebar */}
@@ -78,7 +112,7 @@ export default function PostFeed() {
                     className={`absolute bottom-0 right-0 w-3.5 h-3.5 border-4 border-white rounded-full ${
                       member.status === "online" ? "bg-green-500" : "bg-slate-300"
                     }`}
-                  ></div>
+                  />
                 </div>
                 <span className={`text-sm font-bold ${member.status === "online" ? "text-slate-700" : "text-slate-400"}`}>
                   {member.name}
