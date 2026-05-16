@@ -12,10 +12,13 @@ export default function Profile() {
     bio: user?.bio || ""
   });
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setIsUploadingImage(true);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -29,7 +32,18 @@ export default function Profile() {
         canvas.height = img.height * scaleSize;
         ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
-        setEditForm({ ...editForm, avatar: dataUrl });
+
+        fetch("/api/auth/avatar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: user?.id, imageData: dataUrl })
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.url) setEditForm((prev) => ({ ...prev, avatar: data.url }));
+          })
+          .catch(console.error)
+          .finally(() => setIsUploadingImage(false));
       };
       img.src = reader.result as string;
     };
@@ -111,9 +125,9 @@ export default function Profile() {
                     className="flex-1 w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white rounded-xl py-2 px-4 text-sm font-medium transition-all outline-none"
                     placeholder="URL o sube una imagen..."
                   />
-                  <label className="flex items-center justify-center bg-indigo-100 text-indigo-600 px-4 rounded-xl cursor-pointer hover:bg-indigo-200 transition-colors shadow-sm">
-                    <Camera size={20} />
-                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                  <label className={`flex items-center justify-center px-4 rounded-xl transition-colors shadow-sm ${isUploadingImage ? "bg-indigo-200 text-indigo-400 cursor-not-allowed" : "bg-indigo-100 text-indigo-600 cursor-pointer hover:bg-indigo-200"}`}>
+                    {isUploadingImage ? <span className="text-xs font-bold">...</span> : <Camera size={20} />}
+                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploadingImage} />
                   </label>
                 </div>
               </div>

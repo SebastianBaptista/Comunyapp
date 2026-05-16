@@ -21,7 +21,7 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
 
   // ──────────────────────────────────────────────
   // REGISTRO
@@ -115,6 +115,43 @@ app.use(express.json());
   });
 
   // ──────────────────────────────────────────────
+  // AVATAR — sube imagen al bucket Avatars
+  // ──────────────────────────────────────────────
+  app.post("/api/auth/avatar", async (req, res) => {
+    const { userId, imageData } = req.body;
+
+    if (!userId || !imageData) {
+      return res.status(400).json({ error: "userId e imageData son requeridos" });
+    }
+
+    // imageData viene como "data:image/jpeg;base64,..."
+    const matches = imageData.match(/^data:(.+);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).json({ error: "Formato de imagen inválido" });
+    }
+
+    const contentType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, "base64");
+    const extension = contentType.split("/")[1] || "jpg";
+    const filePath = `${userId}/avatar.${extension}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("Avatars")
+      .upload(filePath, buffer, { contentType, upsert: true });
+
+    if (uploadError) {
+      return res.status(500).json({ error: uploadError.message });
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("Avatars")
+      .getPublicUrl(filePath);
+
+    res.json({ url: urlData.publicUrl });
+  });
+
+  // ──────────────────────────────────────────────
   // PROFILE
   // ──────────────────────────────────────────────
   app.put("/api/auth/profile", async (req, res) => {
@@ -132,7 +169,13 @@ app.use(express.json());
       return res.status(400).json({ error: error.message });
     }
 
-    // Propagate name/avatar to all posts and comments by this user
+    // Actualizar tabla profiles
+    await supabase
+      .from("profiles")
+      .update({ name, avatar, bio, updated_at: new Date().toISOString() })
+      .eq("id", id);
+
+    // Propagar nombre y avatar a posts y comentarios del usuario
     await Promise.all([
       supabase.from("posts").update({ author: name, avatar }).eq("user_id", id),
       supabase.from("post_comments").update({ author: name, avatar }).eq("user_id", id),
