@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../../assets/logo.png";
 import { MessageSquare, School, Compass, User, Bell, LayoutGrid, LogOut } from "lucide-react";
 import { View } from "../../types";
 import { useAuth } from "../../context/AuthContext";
@@ -18,9 +19,7 @@ export default function Layout({ children, activeView, onViewChange, onLogout }:
       {/* Sidebar - Persistent on Desktop */}
       <aside className="hidden lg:flex w-72 bg-white border-r border-brand-border flex-col p-8 space-y-10 flex-shrink-0">
         <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => onViewChange("muro")}>
-          <div className="w-10 h-10 bg-brand-primary rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200 transition-transform group-hover:scale-110">
-            <div className="w-4 h-4 bg-white rounded-full"></div>
-          </div>
+          <img src={logo} alt="Logo" className="w-10 h-10 object-contain transition-transform group-hover:scale-110" />
           <span className="font-bold text-2xl tracking-tight">Emprende Más</span>
         </div>
 
@@ -77,9 +76,7 @@ export default function Layout({ children, activeView, onViewChange, onLogout }:
         {/* Top Header Mobile */}
         <header className="lg:hidden h-16 bg-white border-b border-brand-border px-6 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
+            <img src={logo} alt="Logo" className="w-8 h-8 object-contain" />
             <span className="font-bold text-lg tracking-tight">Emprende Más</span>
           </div>
           <div className="flex items-center gap-2">

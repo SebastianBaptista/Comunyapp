@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../../../assets/logo.png";
 import { Mail, Lock, ArrowRight, Github } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../../../context/AuthContext";
@@ -51,9 +52,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
 
           <div className="relative z-10">
             <div className="flex items-center space-x-3 mb-12">
-              <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center">
-                <div className="w-5 h-5 bg-white rounded-full"></div>
-              </div>
+              <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
               <span className="font-bold text-2xl tracking-tight">Emprende Más</span>
             </div>
             <h1 className="text-5xl font-black mb-6 leading-[1.1] tracking-tight">Vuelve a tu<br />comunidad.</h1>
