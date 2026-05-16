@@ -19,6 +19,62 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Auth routes
+  app.post("/api/auth/register", async (req, res) => {
+    const { name, email, password, role = "student" } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Nombre, email y contraseña son requeridos" });
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name, role }
+      }
+    });
+
+    if (error) return res.status(400).json({ error: error.message });
+    if (!data.user || !data.session) {
+      return res.status(400).json({ error: "No se pudo crear la cuenta" });
+    }
+
+    res.status(201).json({
+      user: {
+        id: data.user.id,
+        name: data.user.user_metadata.name,
+        email: data.user.email!,
+        role: data.user.user_metadata.role,
+        avatar: `https://i.pravatar.cc/150?u=${data.user.id}`
+      },
+      token: data.session.access_token
+    });
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email y contraseña son requeridos" });
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) return res.status(401).json({ error: "Credenciales incorrectas" });
+
+    res.json({
+      user: {
+        id: data.user.id,
+        name: data.user.user_metadata.name ?? data.user.email!.split("@")[0],
+        email: data.user.email!,
+        role: data.user.user_metadata.role ?? "student",
+        avatar: `https://i.pravatar.cc/150?u=${data.user.id}`
+      },
+      token: data.session.access_token
+    });
+  });
+
   // API routes
   app.get("/api/posts", async (_req, res) => {
     const { data, error } = await supabase

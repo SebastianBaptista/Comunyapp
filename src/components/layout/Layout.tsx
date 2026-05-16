@@ -1,14 +1,17 @@
 import React from "react";
 import { MessageSquare, School, Compass, User, Bell, LayoutGrid, LogOut } from "lucide-react";
 import { View } from "../../types";
+import { useAuth } from "../../context/AuthContext";
 
 interface LayoutProps {
   children: React.ReactNode;
   activeView: View;
   onViewChange: (view: View) => void;
+  onLogout: () => void;
 }
 
-export default function Layout({ children, activeView, onViewChange }: LayoutProps) {
+export default function Layout({ children, activeView, onViewChange, onLogout }: LayoutProps) {
+  const { user } = useAuth();
   return (
     <div className="flex min-h-screen bg-brand-background text-brand-text-main overflow-hidden">
       {/* Sidebar - Persistent on Desktop */}
@@ -45,18 +48,21 @@ export default function Layout({ children, activeView, onViewChange }: LayoutPro
         <div className="pt-8 border-t border-brand-border">
           <div className="flex items-center space-x-4 mb-6 p-2 rounded-2xl hover:bg-slate-50 transition-colors cursor-pointer" onClick={() => onViewChange("profile")}>
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 border-2 border-white shadow-md overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
-                alt="Profile" 
+              <img
+                src={user?.avatar ?? "https://i.pravatar.cc/100?u=default"}
+                alt="Profile"
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <p className="font-bold text-sm">Sarah Jenkins</p>
-              <p className="text-xs text-brand-text-muted font-medium">Premium Member</p>
+              <p className="font-bold text-sm">{user?.name ?? "Usuario"}</p>
+              <p className="text-xs text-brand-text-muted font-medium capitalize">{user?.role ?? "member"}</p>
             </div>
           </div>
-          <button className="w-full py-3 px-4 bg-slate-900 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-black transition-colors">
+          <button
+            onClick={onLogout}
+            className="w-full py-3 px-4 bg-slate-900 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-black transition-colors"
+          >
             <LogOut size={16} /> Cerrar Sesión
           </button>
         </div>
