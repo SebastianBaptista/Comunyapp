@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Course } from "../../../types";
 
 interface CourseCardProps {
+  key?: React.Key;
   course: Course;
   index: number;
   onClick?: () => void;

@@ -7,6 +7,7 @@ import { useComments } from "../hooks/useComments";
 import CommentSection from "./CommentSection";
 
 interface PostCardProps {
+  key?: React.Key;
   post: Post;
   index: number;
 }

@@ -18,11 +18,10 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   }
 });
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+const app = express();
+const PORT = 3000;
 
-  app.use(express.json());
+app.use(express.json());
 
   // ──────────────────────────────────────────────
   // REGISTRO
@@ -300,23 +299,28 @@ async function startServer() {
   // ──────────────────────────────────────────────
   // VITE / STATIC
   // ──────────────────────────────────────────────
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
+  // ──────────────────────────────────────────────
+  // VITE / STATIC
+  // ──────────────────────────────────────────────
+  if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+    createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
+    }).then((vite) => {
+      app.use(vite.middlewares);
+      app.listen(PORT, "0.0.0.0", () => {
+        console.log(`✅ Server running on http://localhost:${PORT}`);
+      });
     });
-    app.use(vite.middlewares);
-  } else {
+  } else if (!process.env.VERCEL) {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*", (_req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`✅ Server running on http://localhost:${PORT}`);
+    });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`✅ Server running on http://localhost:${PORT}`);
-  });
-}
-
-startServer();
+export default app;
