@@ -6,16 +6,18 @@ import { Course } from "../../../types";
 interface CourseCardProps {
   course: Course;
   index: number;
+  onClick?: () => void;
 }
 
-export default function CourseCard({ course, index }: CourseCardProps) {
+export default function CourseCard({ course, index, onClick }: CourseCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all group flex flex-col"
+      onClick={onClick}
+      className="bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all group flex flex-col cursor-pointer"
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
