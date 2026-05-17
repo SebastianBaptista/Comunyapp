@@ -25,14 +25,14 @@ export default function Login({ onGoToRegister }: LoginProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || "Credenciales incorrectas");
+        setError(data.error || `Error ${res.status}: problema en el servidor`);
         return;
       }
       login(data.user, data.token);
-    } catch {
-      setError("Error de conexión. Intenta de nuevo.");
+    } catch (err) {
+      setError(`Error de conexión: ${err instanceof Error ? err.message : "Intenta de nuevo"}`);
     } finally {
       setIsLoading(false);
     }
