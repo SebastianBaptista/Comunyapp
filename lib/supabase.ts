@@ -1,9 +1,25 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { getSupabaseEnv, isSupabaseConfigured } from "./env";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { autoRefreshToken: false, persistSession: false } }
-);
+let client: SupabaseClient | null = null;
 
-export default supabase;
+export function getSupabase(): SupabaseClient {
+  if (!isSupabaseConfigured()) {
+    throw new Error("SUPABASE_NOT_CONFIGURED");
+  }
+
+  if (!client) {
+    const { url, serviceRoleKey } = getSupabaseEnv();
+    client = createClient(url, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+  }
+
+  return client;
+}
+
+export default new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    return (getSupabase() as unknown as Record<string | symbol, unknown>)[prop];
+  },
+});

@@ -8,21 +8,28 @@ interface CourseCardProps {
   course: Course;
   index: number;
   onClick?: () => void;
+  onEdit?: () => void;
 }
 
-export default function CourseCard({ course, index, onClick }: CourseCardProps) {
+export default function CourseCard({ course, index, onClick, onEdit }: CourseCardProps) {
   return (
-    <motion.button
-      type="button"
+    <motion.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.06 }}
-      onClick={onClick}
-      className="w-full bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md active:scale-[0.99] transition-all text-left group"
+      className="w-full bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md active:scale-[0.99] transition-all text-left group relative"
     >
+      <button
+        type="button"
+        onClick={onClick}
+        className="absolute inset-0 w-full h-full z-10 focus:outline-none"
+        tabIndex={-1}
+        aria-label={`Ver curso ${course.title}`}
+        style={{ background: "transparent", border: 0, padding: 0, margin: 0 }}
+      />
       <div className="flex gap-0 sm:block">
-        <div className="relative w-28 sm:w-full aspect-square sm:aspect-[16/10] flex-shrink-0 overflow-hidden">
+        <div className="relative w-28 sm:w-full aspect-square sm:aspect-16/10 shrink-0 overflow-hidden">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -50,15 +57,27 @@ export default function CourseCard({ course, index, onClick }: CourseCardProps) 
           <div className="mt-auto pt-3 flex items-center gap-3">
             <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-700"
+                className="h-full rounded-full bg-linear-to-r from-orange-500 to-amber-400 transition-all duration-700"
                 style={{ width: `${course.progress}%` }}
               />
             </div>
             <span className="text-[10px] font-black text-orange-600 tabular-nums">{course.progress}%</span>
-            <ChevronRight size={18} className="text-slate-300 group-hover:text-orange-500 flex-shrink-0" />
+            <ChevronRight size={18} className="text-slate-300 group-hover:text-orange-500 shrink-0" />
+            {onEdit && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit();
+                }}
+                className="ml-2 px-3 py-1 rounded-xl bg-orange-100 text-orange-700 font-bold text-xs hover:bg-orange-200 transition-colors z-20"
+              >
+                Editar
+              </button>
+            )}
           </div>
         </div>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }

@@ -1,5 +1,10 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+
+dotenv.config();
+dotenv.config({ path: ".env.local", override: true });
+
 import "express-async-errors";
+import { isSupabaseConfigured, supabaseConfigError } from "./lib/env";
 import express from "express";
 import path from "path";
 import authRouter from "./routes/auth";
@@ -24,6 +29,9 @@ if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
       app.use(vite.middlewares);
       app.listen(PORT, "0.0.0.0", () => {
         console.log(`✅ Server running on http://localhost:${PORT}`);
+        if (!isSupabaseConfigured()) {
+          console.warn(`⚠️  Supabase: ${supabaseConfigError()}`);
+        }
       });
     });
   });
@@ -35,6 +43,9 @@ if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
   });
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
+    if (!isSupabaseConfigured()) {
+      console.warn(`⚠️  Supabase: ${supabaseConfigError()}`);
+    }
   });
 }
 

@@ -26,6 +26,15 @@ export interface Course {
   thumbnail: string;
 }
 
+export interface CourseChapter {
+  id: string;
+  courseId: string;
+  title: string;
+  videoUrl: string | null;
+  duration: string | null;
+  sortOrder: number;
+}
+
 export type View = "muro" | "classroom" | "profile" | "explore" | "admin";
 
 export interface Comment {
