@@ -129,7 +129,10 @@ router.delete("/:id", async (req, res) => {
 
   const { data: post } = await supabase.from("posts").select("user_id").eq("id", id).single();
   if (!post) return res.status(404).json({ error: "Post no encontrado" });
-  if (post.user_id !== userId) return res.status(403).json({ error: "Sin permiso" });
+  if (post.user_id !== userId) {
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", userId).single();
+    if (profile?.role !== "admin") return res.status(403).json({ error: "Sin permiso" });
+  }
 
   const { error } = await supabase.from("posts").delete().eq("id", id);
   if (error) return res.status(500).json({ error: error.message });
@@ -144,7 +147,10 @@ router.patch("/:id", async (req, res) => {
 
   const { data: post } = await supabase.from("posts").select("user_id").eq("id", id).single();
   if (!post) return res.status(404).json({ error: "Post no encontrado" });
-  if (post.user_id !== userId) return res.status(403).json({ error: "Sin permiso" });
+  if (post.user_id !== userId) {
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", userId).single();
+    if (profile?.role !== "admin") return res.status(403).json({ error: "Sin permiso" });
+  }
 
   const updates: Record<string, any> = { content: content.trim() };
 
@@ -182,7 +188,10 @@ router.post("/:id/pin", async (req, res) => {
 
   const { data: post } = await supabase.from("posts").select("user_id, pinned").eq("id", id).single();
   if (!post) return res.status(404).json({ error: "Post no encontrado" });
-  if (post.user_id !== userId) return res.status(403).json({ error: "Sin permiso" });
+  if (post.user_id !== userId) {
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", userId).single();
+    if (profile?.role !== "admin") return res.status(403).json({ error: "Sin permiso" });
+  }
 
   const { error } = await supabase.from("posts").update({ pinned: !post.pinned }).eq("id", id);
   if (error) return res.status(500).json({ error: error.message });

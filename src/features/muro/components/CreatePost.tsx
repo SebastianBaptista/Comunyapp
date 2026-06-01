@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Send, Tag, Plus, X, ImagePlus } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
+import { requireAdmin } from "../../../lib/permissions";
 
 interface CreatePostProps {
   onSubmit: (content: string, tagIds: string[], imageData?: string) => void;
@@ -28,6 +29,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
 
   const handleCreateTag = async () => {
     if (!newTag.trim() || creatingTag) return;
+    if (!requireAdmin(user?.role, "crear etiquetas")) return;
     setCreatingTag(true);
     try {
       const res = await fetch("/api/tags", {
@@ -167,6 +169,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
                 </button>
                 <button
                   onClick={async () => {
+                    if (!requireAdmin(user?.role, "eliminar etiquetas")) return;
                     await fetch(`/api/tags/${tag.id}`, { method: "DELETE" });
                     setAllTags((prev) => prev.filter((t) => t.id !== tag.id));
                     setSelectedIds((prev) => prev.filter((id) => id !== tag.id));

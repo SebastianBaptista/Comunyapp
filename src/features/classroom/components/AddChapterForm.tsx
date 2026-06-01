@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import { apiFetch } from "../../../lib/api";
+import { useAuth } from "../../../context/AuthContext";
+import { isAdmin } from "../../../lib/permissions";
 
 interface AddChapterFormProps {
   courseId: string;
@@ -8,6 +10,7 @@ interface AddChapterFormProps {
 }
 
 export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProps) {
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [duration, setDuration] = useState("");
@@ -47,6 +50,8 @@ export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProp
       setIsSaving(false);
     }
   };
+
+  if (!isAdmin(user?.role)) return null;
 
   if (!expanded) {
     return (

@@ -1,5 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { isAdmin } from "../lib/permissions";
 import PostFeed from "../features/muro/components/PostFeed";
 import Classroom from "../features/classroom/components/Classroom";
 import Profile from "../features/profile/components/Profile";
@@ -7,6 +9,15 @@ import AdminDashboard from "../features/admin/AdminDashboard";
 import Landing from "../features/landing/landing";
 import Login from "../features/auth/components/Login";
 import Register from "../features/auth/components/Register";
+
+function AdminRoute() {
+  const { user } = useAuth();
+  if (!isAdmin(user?.role)) {
+    setTimeout(() => alert("No tienes permisos para acceder al panel de administración."), 0);
+    return <Navigate to="/muro" replace />;
+  }
+  return <AdminDashboard />;
+}
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -55,5 +66,5 @@ export const appRoutes: AppRoute[] = [
   { path: "/classroom", element: <Classroom /> },
   { path: "/explore", element: <ExplorePage /> },
   { path: "/profile", element: <Profile /> },
-  { path: "/admin", element: <AdminDashboard /> },
+  { path: "/admin", element: <AdminRoute /> },
 ];

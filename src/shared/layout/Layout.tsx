@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import { MessageSquare, School, Compass, User, Bell, LayoutGrid, LogOut, Shield } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { isAdmin } from "../../lib/permissions";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,7 +15,6 @@ const desktopNav = [
   { path: "/classroom", label: "Aula Virtual", icon: <School size={20} /> },
   { path: "/explore", label: "Explorar", icon: <Compass size={20} /> },
   { path: "/profile", label: "Mi Perfil", icon: <User size={20} /> },
-  { path: "/admin", label: "Admin", icon: <Shield size={20} /> },
 ];
 
 const mobileNav = [
@@ -28,6 +28,7 @@ export default function Layout({ children, onLogout }: LayoutProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const adminNav = isAdmin(user?.role) ? [{ path: "/admin", label: "Admin", icon: <Shield size={20} /> }] : [];
   const isProfileView = location.pathname === "/profile";
 
   return (
@@ -39,7 +40,7 @@ export default function Layout({ children, onLogout }: LayoutProps) {
         </div>
 
         <nav className="flex-1 space-y-3">
-          {desktopNav.map((item) => (
+          {[...desktopNav, ...adminNav].map((item) => (
             <NavLink
               key={item.path}
               to={item.path}

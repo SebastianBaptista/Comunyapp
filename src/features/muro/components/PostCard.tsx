@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { Post } from "../../../types";
 import { useComments } from "../hooks/useComments";
 import CommentSection from "./CommentSection";
+import { useAuth } from "../../../context/AuthContext";
+import { requireAdmin } from "../../../lib/permissions";
 
 const REACTIONS = [
   { type: "like",  emoji: "👍" },
@@ -35,6 +37,7 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin, onCommentAdded }: PostCardProps) {
+  const { user } = useAuth();
   const { comments, totalCount, isLoading: commentsLoading, isOpen, toggle, addComment, reactToComment } = useComments(post.id);
   const [showPicker, setShowPicker] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -187,14 +190,14 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
                   <Pencil size={15} className="text-indigo-500" /> Editar
                 </button>
                 <button
-                  onClick={() => { setShowMenu(false); onPin(post.id); }}
+                  onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "fijar publicaciones")) onPin(post.id); }}
                   className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   <Pin size={15} className={post.pinned ? "fill-indigo-500 text-indigo-500" : "text-indigo-500"} />
                   {post.pinned ? "Desfijar" : "Fijar post"}
                 </button>
                 <button
-                  onClick={() => { setShowMenu(false); onDelete(post.id); }}
+                  onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "eliminar publicaciones")) onDelete(post.id); }}
                   className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <Trash2 size={15} /> Eliminar

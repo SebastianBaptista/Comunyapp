@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import { useCourses } from "../hooks/useCourses";
+import { useAuth } from "../../../context/AuthContext";
+import { requireAdmin } from "../../../lib/permissions";
 import CourseCard from "./CourseCard";
 import CourseDetail from "./CourseDetail";
 import CreateCourseSheet from "./CreateCourseSheet";
@@ -8,6 +10,7 @@ import Spinner from "../../../shared/ui/Spinner";
 import { Course } from "../../../types";
 
 export default function Classroom() {
+  const { user } = useAuth();
   const { courses, isLoading, error, refetch } = useCourses();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showCreate, setShowCreate] = useState(false);
@@ -22,8 +25,10 @@ export default function Classroom() {
         onBack={() => setSelectedCourse(null)}
         onCourseUpdated={refetch}
         onEdit={() => {
-          setEditingCourse(selectedCourse);
-          setShowCreate(true);
+          if (requireAdmin(user?.role, "editar cursos")) {
+            setEditingCourse(selectedCourse);
+            setShowCreate(true);
+          }
         }}
       />
     );
@@ -39,7 +44,7 @@ export default function Classroom() {
           </div>
           <button
             type="button"
-            onClick={() => setShowCreate(true)}
+            onClick={() => { if (requireAdmin(user?.role, "subir cursos")) setShowCreate(true); }}
             className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#8B5E3C] text-white text-sm font-bold shadow-md shadow-amber-900/10 hover:bg-[#7a5235] active:scale-[0.98] transition-all shrink-0"
           >
             <Plus size={18} /> Subir curso
@@ -60,7 +65,7 @@ export default function Classroom() {
             </p>
             <button
               type="button"
-              onClick={() => setShowCreate(true)}
+              onClick={() => { if (requireAdmin(user?.role, "subir cursos")) setShowCreate(true); }}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#8B5E3C] text-white text-sm font-bold"
             >
               <Plus size={18} /> Subir curso
@@ -75,8 +80,10 @@ export default function Classroom() {
                 index={idx}
                 onClick={() => setSelectedCourse(course)}
                 onEdit={() => {
-                  setEditingCourse(course);
-                  setShowCreate(true);
+                  if (requireAdmin(user?.role, "editar cursos")) {
+                    setEditingCourse(course);
+                    setShowCreate(true);
+                  }
                 }}
               />
             ))}

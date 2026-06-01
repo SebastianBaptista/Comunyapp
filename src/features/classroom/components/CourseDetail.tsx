@@ -20,7 +20,7 @@ function toEmbedUrl(url: string): string | null {
   return url;
 }
 
-export default function CourseDetail({ course, onBack, onCourseUpdated }: CourseDetailProps) {
+export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }: CourseDetailProps) {
   const { chapters, isLoading, refetch } = useCourseChapters(course.id);
   const [activeModule, setActiveModule] = useState(0);
 
