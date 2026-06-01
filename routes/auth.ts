@@ -4,7 +4,8 @@ import supabase from "../lib/supabase";
 const router = Router();
 
 router.post("/register", async (req, res) => {
-  const { name, email, password, role = "student" } = req.body;
+  const { name, email, password } = req.body;
+  const role = "miembro";
 
   if (!name || !email || !password) {
     return res.status(400).json({ error: "Nombre, email y contraseña son requeridos" });
@@ -96,7 +97,7 @@ router.post("/login", async (req, res) => {
     await supabase.from("profiles").upsert({
       id: data.user.id,
       name: data.user.email!.split("@")[0],
-      role: "student",
+      role: "miembro",
       avatar: `https://i.pravatar.cc/150?u=${data.user.id}`,
       bio: "",
     });
@@ -107,7 +108,7 @@ router.post("/login", async (req, res) => {
       id: data.user.id,
       name: profile?.name ?? data.user.email!.split("@")[0],
       email: data.user.email!,
-      role: profile?.role ?? "student",
+      role: profile?.role ?? "miembro",
       avatar: profile?.avatar ?? `https://i.pravatar.cc/150?u=${data.user.id}`,
       bio: profile?.bio ?? "",
     },
