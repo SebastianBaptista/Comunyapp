@@ -31,7 +31,7 @@ export default function Register({ onGoToLogin }: RegisterProps) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Error al crear la cuenta");
+        setError(data.error || data.detail || "Error al crear la cuenta");
         return;
       }
       login(data.user, data.token);

@@ -27,7 +27,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || `Error ${res.status}: problema en el servidor`);
+        setError(data.error || data.detail || `Error ${res.status}: problema en el servidor`);
         return;
       }
       login(data.user, data.token);

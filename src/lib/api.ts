@@ -38,10 +38,8 @@ export async function apiFetch<T = unknown>(
   const data = await parseApiResponse<T>(res);
 
   if (!res.ok) {
-    const message =
-      typeof data === "object" && data !== null && "error" in data
-        ? String((data as { error: string }).error)
-        : `Error (${res.status})`;
+    const d = typeof data === "object" && data !== null ? (data as Record<string, unknown>) : {};
+    const message = d.error ? String(d.error) : d.detail ? String(d.detail) : `Error (${res.status})`;
     throw new Error(message);
   }
 

@@ -19,6 +19,12 @@ export default defineConfig(({mode}) => {
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
       allowedHosts: true,
+      proxy: {
+        '/api': {
+          target: env.PYTHON_BACKEND_URL || 'http://localhost:8000',
+          changeOrigin: true,
+        },
+      },
     },
   };
 });
