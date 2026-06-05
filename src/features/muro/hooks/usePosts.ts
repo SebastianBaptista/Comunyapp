@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Post } from "../../../types";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 
 const PAGE_SIZE = 10;
 
@@ -9,7 +10,7 @@ async function fetchPage(userId?: string, cursor?: string, tags: string[] = []):
   if (cursor) params.set("cursor", cursor);
   if (userId) params.set("userId", userId);
   if (tags.length > 0) params.set("tags", tags.join(","));
-  const res = await fetch(`/api/posts?${params}`);
+  const res = await fetch(`${API_BASE}/api/posts?${params}`);
   if (!res.ok) throw new Error("Error al cargar posts");
   const data = await res.json();
   if (Array.isArray(data)) return { posts: data, nextCursor: null };
@@ -70,7 +71,7 @@ export function usePosts(selectedTags: string[] = []) {
 
   const createPost = useCallback(async (content: string, tagIds: string[] = [], imageData?: string) => {
     if (!user) return;
-    const res = await fetch("/api/posts", {
+    const res = await fetch(`${API_BASE}/api/posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content, userId: user.id, tagIds, imageData }),
@@ -100,7 +101,7 @@ export function usePosts(selectedTags: string[] = []) {
     }));
 
     // Confirmar con el servidor
-    const res = await fetch(`/api/posts/${postId}/react`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}/react`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, reactionType }),
@@ -115,7 +116,7 @@ export function usePosts(selectedTags: string[] = []) {
 
   const deletePost = useCallback(async (postId: string) => {
     if (!user) return;
-    const res = await fetch(`/api/posts/${postId}`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id }),
@@ -125,7 +126,7 @@ export function usePosts(selectedTags: string[] = []) {
 
   const editPost = useCallback(async (postId: string, content: string, imageData?: string, removeImage?: boolean, tagIds?: string[]) => {
     if (!user) return;
-    const res = await fetch(`/api/posts/${postId}`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, content, imageData, removeImage, tagIds }),
@@ -142,7 +143,7 @@ export function usePosts(selectedTags: string[] = []) {
 
   const pinPost = useCallback(async (postId: string) => {
     if (!user) return;
-    const res = await fetch(`/api/posts/${postId}/pin`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}/pin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id }),

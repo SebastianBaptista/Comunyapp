@@ -1,3 +1,5 @@
+export const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
+
 export async function parseApiResponse<T = unknown>(res: Response): Promise<T> {
   const text = await res.text();
 
@@ -26,13 +28,16 @@ export async function apiFetch<T = unknown>(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<{ data: T; res: Response }> {
+  const url =
+    typeof input === "string" && input.startsWith("/")
+      ? `${API_BASE}${input}`
+      : input;
+
   let res: Response;
   try {
-    res = await fetch(input, init);
+    res = await fetch(url, init);
   } catch {
-    throw new Error(
-      "No se pudo conectar con el servidor. ¿Está corriendo npm run dev en el puerto 3000?"
-    );
+    throw new Error("No se pudo conectar con el servidor.");
   }
 
   const data = await parseApiResponse<T>(res);

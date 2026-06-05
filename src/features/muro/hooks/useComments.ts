@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Comment } from "../../../types";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 
 function countAllComments(comments: Comment[]): number {
   return comments.reduce((acc, c) => acc + 1 + countAllComments(c.replies ?? []), 0);
@@ -37,7 +38,7 @@ export function useComments(postId: string) {
     setIsLoading(true);
     try {
       const params = user ? `?userId=${user.id}` : "";
-      const res = await fetch(`/api/posts/${postId}/comments${params}`);
+      const res = await fetch(`${API_BASE}/api/posts/${postId}/comments${params}`);
       if (!res.ok) throw new Error("Error al cargar comentarios");
       const data = await res.json();
       setComments(Array.isArray(data) ? data : []);
@@ -57,7 +58,7 @@ export function useComments(postId: string) {
 
   const addComment = useCallback(async (content: string, parentId?: string): Promise<boolean> => {
     if (!user) return false;
-    const res = await fetch(`/api/posts/${postId}/comments`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content, userId: user.id, parentId: parentId ?? null }),
@@ -72,7 +73,7 @@ export function useComments(postId: string) {
 
   const reactToComment = useCallback(async (postId: string, commentId: string, reactionType: string): Promise<void> => {
     if (!user) return;
-    const res = await fetch(`/api/posts/${postId}/comments/${commentId}/react`, {
+    const res = await fetch(`${API_BASE}/api/posts/${postId}/comments/${commentId}/react`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, reactionType }),

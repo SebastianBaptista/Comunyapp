@@ -3,6 +3,7 @@ import { Send, CornerDownRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Comment } from "../../../types";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 
 const MAX_DEPTH = 4;
 
@@ -21,7 +22,7 @@ function CommentReactionPill({ postId, commentId, topEmojis, total, userReaction
   const handleMouseEnter = () => {
     setHovered(true);
     if (reactors === null) {
-      fetch(`/api/posts/${postId}/comments/${commentId}/reactions`)
+      fetch(`${API_BASE}/api/posts/${postId}/comments/${commentId}/reactions`)
         .then((r) => r.json())
         .then(setReactors)
         .catch(() => setReactors([]));

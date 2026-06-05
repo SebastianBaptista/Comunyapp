@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Send, Tag, Plus, X, ImagePlus } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
 import { requireAdmin } from "../../../lib/permissions";
+import { API_BASE } from "../../../lib/api";
 
 interface CreatePostProps {
   onSubmit: (content: string, tagIds: string[], imageData?: string) => void;
@@ -21,7 +22,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch("/api/tags").then((r) => r.json()).then(setAllTags).catch(() => {});
+    fetch(`${API_BASE}/api/tags`).then((r) => r.json()).then(setAllTags).catch(() => {});
   }, []);
 
   const toggleTag = (id: string) =>
@@ -32,7 +33,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
     if (!requireAdmin(user?.role, "crear etiquetas")) return;
     setCreatingTag(true);
     try {
-      const res = await fetch("/api/tags", {
+      const res = await fetch(`${API_BASE}/api/tags`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newTag.trim() }),
@@ -170,7 +171,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
                 <button
                   onClick={async () => {
                     if (!requireAdmin(user?.role, "eliminar etiquetas")) return;
-                    await fetch(`/api/tags/${tag.id}`, { method: "DELETE" });
+                    await fetch(`${API_BASE}/api/tags/${tag.id}`, { method: "DELETE" });
                     setAllTags((prev) => prev.filter((t) => t.id !== tag.id));
                     setSelectedIds((prev) => prev.filter((id) => id !== tag.id));
                   }}

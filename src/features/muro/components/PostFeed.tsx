@@ -3,6 +3,7 @@ import { usePosts } from "../hooks/usePosts";
 import CreatePost from "./CreatePost";
 import PostCard from "./PostCard";
 import Spinner from "../../../shared/ui/Spinner";
+import { API_BASE } from "../../../lib/api";
 
 interface TagOption { id: string; name: string; }
 
@@ -11,7 +12,7 @@ export default function PostFeed() {
   const [allTags, setAllTags] = useState<TagOption[]>([]);
 
   useEffect(() => {
-    fetch("/api/tags").then((r) => r.json()).then(setAllTags).catch(() => {});
+    fetch(`${API_BASE}/api/tags`).then((r) => r.json()).then(setAllTags).catch(() => {});
   }, []);
 
   const toggleTag = (name: string) =>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Mail, Lock, User, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 
 interface RegisterProps {
   onGoToLogin: () => void;
@@ -24,7 +25,7 @@ export default function Register({ onGoToLogin }: RegisterProps) {
     setError("");
     setIsLoading(true);
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role: "Miembro" }),

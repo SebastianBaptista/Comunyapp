@@ -3,6 +3,7 @@ import logo from "../../../assets/logo.png";
 import { Mail, Lock, ArrowRight, Github } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 
 interface LoginProps {
   onGoToRegister: () => void;
@@ -20,7 +21,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
     setError("");
     setIsLoading(true);
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

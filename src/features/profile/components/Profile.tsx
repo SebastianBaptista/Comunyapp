@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE } from "../../../lib/api";
 import ProfileHero from "./ProfileHero";
 import ProfileLevelCard from "./ProfileLevelCard";
 import ProfileStatsGrid from "./ProfileStatsGrid";
@@ -42,7 +43,7 @@ export default function Profile() {
 
         setEditForm((prev) => ({ ...prev, avatar: dataUrl }));
 
-        fetch("/api/auth/avatar", {
+        fetch(`${API_BASE}/api/auth/avatar`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userId: user?.id, imageData: dataUrl }),
@@ -67,7 +68,7 @@ export default function Profile() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const res = await fetch("/api/auth/profile", {
+      const res = await fetch(`${API_BASE}/api/auth/profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
