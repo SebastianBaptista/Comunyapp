@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Play, Users, Zap, ArrowRight, ShieldCheck, Globe } from "lucide-react";
 import { motion } from "motion/react";
+import logo from "../../assets/logo.png";
 
 interface LandingProps {
   onViewChange: (view: "login" | "register") => void;
@@ -14,10 +15,8 @@ export default function Landing({ onViewChange }: LandingProps) {
       {/* Navigation */}
       <nav className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
-            <div className="w-4 h-4 bg-white rounded-full"></div>
-          </div>
-          <span className="font-black text-xl text-slate-900 tracking-tight">Iconicfy</span>
+          <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+          <span className="font-black text-xl text-slate-900 tracking-tight">Emprende Más</span>
         </div>
         <div className="flex md:hidden items-center gap-2">
           <button
@@ -225,12 +224,10 @@ export default function Landing({ onViewChange }: LandingProps) {
       <footer className="max-w-7xl mx-auto px-6 py-12 border-t border-slate-100">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
-            <span className="font-black text-lg text-slate-900 tracking-tight">Iconicfy</span>
+            <img src={logo} alt="Logo" className="w-8 h-8 object-contain" />
+            <span className="font-black text-lg text-slate-900 tracking-tight">Emprende Más</span>
           </div>
-          <p className="text-slate-400 text-sm font-medium">© 2026 Iconicfy. Todos los derechos reservados.</p>
+          <p className="text-slate-400 text-sm font-medium">© 2026 Emprende Más. Todos los derechos reservados.</p>
           <div className="flex items-center space-x-6">
             <a href="#" className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors">Twitter</a>
             <a href="#" className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors">Instagram</a>

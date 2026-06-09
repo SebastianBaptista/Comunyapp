@@ -3,6 +3,7 @@ import { Lock, User, Sparkles, ShieldCheck, XCircle, Mail } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../../../context/AuthContext";
 import { apiFetch, API_BASE } from "../../../lib/api";
+import logo from "../../../assets/logo.png";
 
 interface InviteRegisterProps {
   onGoToLogin: () => void;
@@ -175,9 +176,12 @@ export default function InviteRegister({ onGoToLogin }: InviteRegisterProps) {
 
         {/* Right side: form */}
         <div className="md:col-span-5 bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm flex flex-col justify-center order-2">
-          <div className="mb-8">
-            <h2 className="text-2xl font-black text-slate-900">Completa tu registro</h2>
-            <p className="text-slate-400 text-sm font-medium mt-1">Tu email ya está vinculado a esta invitación.</p>
+          <div className="mb-8 flex items-center gap-3">
+            <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+            <div>
+              <h2 className="text-2xl font-black text-slate-900">Completa tu registro</h2>
+              <p className="text-slate-400 text-sm font-medium mt-1">Tu email ya está vinculado a esta invitación.</p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

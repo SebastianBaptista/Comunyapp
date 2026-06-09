@@ -6,6 +6,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { apiFetch } from "../../../lib/api";
 import type { PlanType } from "../../../types";
+import logo from "../../../assets/logo.png";
 
 interface RegisterProps {
   onGoToLogin: () => void;
@@ -249,11 +250,14 @@ export default function Register({ onGoToLogin }: RegisterProps) {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-2xl bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm"
       >
-        <div className="mb-2">
-          <h2 className="text-2xl font-black text-slate-900">Crea tu cuenta</h2>
-          <p className="text-slate-400 text-sm font-medium mt-1">
-            Regístrate y envía tu comprobante de pago para activar tu acceso.
-          </p>
+        <div className="mb-2 flex items-center gap-3">
+          <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+          <div>
+            <h2 className="text-2xl font-black text-slate-900">Crea tu cuenta</h2>
+            <p className="text-slate-400 text-sm font-medium mt-1">
+              Regístrate y envía tu comprobante de pago para activar tu acceso.
+            </p>
+          </div>
         </div>
 
         <div className="mt-8">
