@@ -38,7 +38,7 @@ export interface CourseChapter {
   sortOrder: number;
 }
 
-export type View = "muro" | "classroom" | "profile" | "explore" | "admin";
+export type View = "muro" | "classroom" | "profile" | "admin";
 
 export type PlanType = "1m" | "3m" | "6m" | "1y" | "indefinido";
 

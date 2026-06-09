@@ -47,15 +47,6 @@ function InviteRegisterPage() {
   return <InviteRegister onGoToLogin={() => navigate("/login")} />;
 }
 
-function ExplorePage() {
-  return (
-    <div className="text-center py-20">
-      <h2 className="text-2xl font-bold text-[#131b2e]">Explorando comunidades...</h2>
-      <p className="text-[#464555] mt-2 italic">Feature coming soon!</p>
-    </div>
-  );
-}
-
 export interface AppRoute {
   path: string;
   element: React.ReactNode;
@@ -71,7 +62,6 @@ export const authRoutes: AppRoute[] = [
 export const appRoutes: AppRoute[] = [
   { path: "/muro", element: <PostFeed /> },
   { path: "/classroom", element: <Classroom /> },
-  { path: "/explore", element: <ExplorePage /> },
   { path: "/profile", element: <Profile /> },
   { path: "/admin", element: <AdminRoute /> },
 ];

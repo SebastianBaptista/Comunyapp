@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import { MessageSquare, School, Compass, User, Bell, LayoutGrid, LogOut, Shield } from "lucide-react";
+import { MessageSquare, School, User, Bell, LayoutGrid, LogOut, Shield } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { isAdmin } from "../../lib/permissions";
@@ -13,14 +13,12 @@ interface LayoutProps {
 const desktopNav = [
   { path: "/muro", label: "Comunidad", icon: <MessageSquare size={20} /> },
   { path: "/classroom", label: "Aula Virtual", icon: <School size={20} /> },
-  { path: "/explore", label: "Explorar", icon: <Compass size={20} /> },
   { path: "/profile", label: "Mi Perfil", icon: <User size={20} /> },
 ];
 
 const mobileNav = [
   { path: "/muro", label: "Home", icon: MessageSquare },
   { path: "/classroom", label: "Classroom", icon: School },
-  { path: "/explore", label: "Calendario", icon: Compass },
   { path: "/profile", label: "Perfil", icon: User },
 ];
 
