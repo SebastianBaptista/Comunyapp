@@ -16,7 +16,7 @@ export default function Landing({ onViewChange }: LandingProps) {
       <nav className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
-          <span className="font-black text-xl text-slate-900 tracking-tight">Emprende Más</span>
+          <span className="font-black text-xl text-slate-900 tracking-tight">Ecom Club</span>
         </div>
         <div className="flex md:hidden items-center gap-2">
           <button
@@ -225,9 +225,9 @@ export default function Landing({ onViewChange }: LandingProps) {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-8 h-8 object-contain" />
-            <span className="font-black text-lg text-slate-900 tracking-tight">Emprende Más</span>
+            <span className="font-black text-lg text-slate-900 tracking-tight">Ecom Club</span>
           </div>
-          <p className="text-slate-400 text-sm font-medium">© 2026 Emprende Más. Todos los derechos reservados.</p>
+          <p className="text-slate-400 text-sm font-medium">© 2026 Ecom Club. Todos los derechos reservados.</p>
           <div className="flex items-center space-x-6">
             <a href="#" className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors">Twitter</a>
             <a href="#" className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors">Instagram</a>

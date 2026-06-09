@@ -54,7 +54,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
           <div className="relative z-10">
             <div className="flex items-center space-x-3 mb-12">
               <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
-              <span className="font-bold text-2xl tracking-tight">Emprende Más</span>
+              <span className="font-bold text-2xl tracking-tight">Ecom Club</span>
             </div>
             <h1 className="text-5xl font-black mb-6 leading-[1.1] tracking-tight">Vuelve a tu<br />comunidad.</h1>
             <p className="text-slate-400 text-lg font-medium max-w-sm">
@@ -78,7 +78,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
         <div className="md:col-span-5 bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm flex flex-col justify-center">
           <div className="flex md:hidden items-center gap-3 mb-8">
             <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
-            <span className="font-bold text-xl tracking-tight text-slate-900">Emprende Más</span>
+            <span className="font-bold text-xl tracking-tight text-slate-900">Ecom Club</span>
           </div>
           <h2 className="text-2xl font-black text-slate-900 mb-8">Iniciar Sesión</h2>
 
