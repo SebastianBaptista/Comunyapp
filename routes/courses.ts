@@ -49,6 +49,41 @@ router.put("/:courseId", async (req, res) => {
   }
 });
 
+// Eliminar curso
+router.delete("/:courseId", async (req, res) => {
+  if (!isSupabaseConfigured()) {
+    return res.status(503).json({ error: supabaseConfigError() });
+  }
+
+  const { courseId } = req.params;
+
+  try {
+    const supabase = getSupabase();
+
+    // Eliminar primero los capítulos asociados
+    await supabase
+      .from("course_chapters")
+      .delete()
+      .eq("course_id", courseId);
+
+    // Eliminar el curso
+    const { error } = await supabase
+      .from("courses")
+      .delete()
+      .eq("id", courseId);
+
+    if (error) {
+      console.error("Error deleting course:", error.message);
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json({ success: true, message: "Curso eliminado con éxito" });
+  } catch (err) {
+    console.error("DELETE /api/courses/:courseId:", err);
+    res.status(500).json({ error: supabaseErrorMessage(err) });
+  }
+});
+
 // Editar capítulo
 router.put("/:courseId/chapters/:chapterId", async (req, res) => {
   if (!isSupabaseConfigured()) {

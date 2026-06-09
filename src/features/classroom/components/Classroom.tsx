@@ -16,6 +16,17 @@ export default function Classroom() {
   const [showCreate, setShowCreate] = useState(false);
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
 
+  React.useEffect(() => {
+    if (selectedCourse) {
+      const updated = courses.find((c) => c.id === selectedCourse.id);
+      if (updated) {
+        setSelectedCourse(updated);
+      } else {
+        setSelectedCourse(null);
+      }
+    }
+  }, [courses, selectedCourse?.id]);
+
   if (isLoading) return <Spinner />;
 
   if (selectedCourse) {

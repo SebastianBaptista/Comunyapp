@@ -53,7 +53,7 @@ export interface AppRoute {
 }
 
 export const authRoutes: AppRoute[] = [
-  { path: "/", element: <LandingPage /> },
+  { path: "/", element: <Navigate to="/login" replace /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/invite", element: <InviteRegisterPage /> },

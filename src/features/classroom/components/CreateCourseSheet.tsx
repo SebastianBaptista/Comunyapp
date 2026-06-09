@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Camera, Save, X } from "lucide-react";
+import { Camera, Save, X, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useApiFetch } from "../../../lib/api";
 import { Course } from "../../../types";
@@ -20,6 +20,7 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
@@ -128,6 +129,27 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
     }
   };
 
+  const handleDelete = async () => {
+    if (!course) return;
+    const confirmDelete = window.confirm(`¿Estás seguro de que deseas eliminar el curso "${course.title}"? Esta acción no se puede deshacer.`);
+    if (!confirmDelete) return;
+
+    setIsDeleting(true);
+    setError(null);
+    try {
+      await api(`/api/courses/${course.id}`, {
+        method: "DELETE",
+      });
+      reset();
+      onCreated();
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al eliminar el curso");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const isEdit = Boolean(course);
   const modalTitle = isEdit ? "Editar curso" : "Subir curso";
 
@@ -209,15 +231,27 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
         <p className="text-sm font-medium text-red-600 bg-red-50 rounded-xl px-4 py-2">{error}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSaving || isUploading}
-        className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#8B5E3C] text-white font-bold rounded-2xl hover:bg-[#7a5235] disabled:opacity-50 transition-all"
-      >
-        {isSaving ? (isEdit ? "Guardando..." : "Creando...") : (
-          <><Save size={18} /> {isEdit ? "Guardar cambios" : "Crear curso"}</>
+      <div className={isEdit ? "grid grid-cols-2 gap-3" : "w-full"}>
+        {isEdit && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={isSaving || isDeleting || isUploading}
+            className="flex items-center justify-center gap-2 py-3.5 border-2 border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 font-bold rounded-2xl disabled:opacity-50 transition-all cursor-pointer"
+          >
+            {isDeleting ? "Eliminando..." : <><Trash2 size={18} /> Eliminar</>}
+          </button>
         )}
-      </button>
+        <button
+          type="submit"
+          disabled={isSaving || isDeleting || isUploading}
+          className="flex items-center justify-center gap-2 py-3.5 bg-[#8B5E3C] text-white font-bold rounded-2xl hover:bg-[#7a5235] disabled:opacity-50 transition-all cursor-pointer w-full"
+        >
+          {isSaving ? "Guardando..." : (
+            <><Save size={18} /> {isEdit ? "Guardar cambios" : "Crear curso"}</>
+          )}
+        </button>
+      </div>
     </form>
   );
 
