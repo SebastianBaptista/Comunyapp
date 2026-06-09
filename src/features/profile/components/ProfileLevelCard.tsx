@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Flame, 
-  BookOpen, 
-  GraduationCap, 
-  Pencil, 
-  Heart, 
-  MessageSquare, 
-  ChevronDown, 
-  ChevronUp, 
+import {
+  Flame,
+  BookOpen,
+  GraduationCap,
+  Pencil,
+  Heart,
+  MessageSquare,
+  ChevronDown,
+  ChevronUp,
   Award,
-  HelpCircle
+  HelpCircle,
 } from "lucide-react";
-import { PROFILE_LEVEL, XP_BREAKDOWN } from "../data/profileMock";
+import { XP_BREAKDOWN } from "../data/profileMock";
 
 const actionIconMap = {
   book: BookOpen,
@@ -23,9 +23,40 @@ const actionIconMap = {
   flame: Flame,
 };
 
-export default function ProfileLevelCard() {
+interface Props {
+  level: number;
+  xpCurrent: number;
+  xpNext: number;
+  tierName?: string;
+  tierDescription?: string;
+  loading?: boolean;
+}
+
+export default function ProfileLevelCard({
+  level,
+  xpCurrent,
+  xpNext,
+  tierName,
+  tierDescription,
+  loading = false,
+}: Props) {
   const [showXpInfo, setShowXpInfo] = useState(false);
-  const progress = Math.round((PROFILE_LEVEL.xpCurrent / PROFILE_LEVEL.xpTarget) * 100);
+  const progress = xpNext > 0 ? Math.min(Math.round((xpCurrent / xpNext) * 100), 100) : 0;
+  const xpToNext = Math.max(xpNext - xpCurrent, 0);
+
+  if (loading) {
+    return (
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-white p-6 shadow-xl border border-slate-800/80 animate-pulse">
+        <div className="flex items-center justify-between mb-4">
+          <div className="h-6 bg-slate-800 rounded-full w-32" />
+          <div className="w-14 h-14 bg-slate-800 rounded-2xl" />
+        </div>
+        <div className="h-6 bg-slate-800 rounded w-48 mb-2" />
+        <div className="h-3 bg-slate-800 rounded w-40 mb-5" />
+        <div className="h-3.5 bg-slate-800 rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-white p-6 shadow-xl border border-slate-800/80">
@@ -39,18 +70,14 @@ export default function ProfileLevelCard() {
           <span className="inline-flex px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-black uppercase tracking-wider">
             Nivel del Usuario
           </span>
-          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-400">
-            <Flame size={12} className="fill-amber-400 animate-pulse" />
-            Racha Activa
-          </span>
         </div>
-        
+
         {/* Glowing Level Badge */}
         <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-500 to-pink-500 p-[2px] shadow-lg shadow-indigo-500/20">
           <div className="w-full h-full rounded-2xl bg-slate-950 flex flex-col items-center justify-center">
             <span className="text-[9px] font-bold text-slate-400 uppercase leading-none">LVL</span>
             <span className="text-xl font-black leading-none text-white tabular-nums mt-0.5">
-              {PROFILE_LEVEL.level}
+              {level}
             </span>
           </div>
         </div>
@@ -58,16 +85,16 @@ export default function ProfileLevelCard() {
 
       {/* Title & XP Progress Summary */}
       <div className="relative z-10">
-        <h3 className="text-xl font-black tracking-tight text-white flex items-center gap-2">
-          {PROFILE_LEVEL.title}
-          <span className="text-xs font-semibold text-slate-400 italic">({PROFILE_LEVEL.subtitle})</span>
+        <h3 className="text-xl font-black tracking-tight text-white">
+          {tierName || `Nivel ${level}`}
         </h3>
         <p className="text-xs font-medium text-slate-300 mt-1">
-          Faltan <span className="font-bold text-indigo-400">{PROFILE_LEVEL.xpToNext} XP</span> para subir al nivel <span className="font-bold text-pink-400">{PROFILE_LEVEL.level + 1}</span>
+          Faltan <span className="font-bold text-indigo-400">{xpToNext.toLocaleString()} XP</span>{" "}
+          para subir al nivel <span className="font-bold text-pink-400">{level + 1}</span>
         </p>
       </div>
 
-      {/* Progress Bar Container */}
+      {/* Progress Bar */}
       <div className="mt-5 relative z-10">
         <div className="h-3.5 rounded-full bg-slate-800/80 p-[2px] border border-slate-700/50 shadow-inner overflow-hidden">
           <motion.div
@@ -78,27 +105,27 @@ export default function ProfileLevelCard() {
           />
         </div>
         <div className="flex justify-between mt-2 text-xs font-black tracking-wider text-slate-400 tabular-nums">
-          <span>{PROFILE_LEVEL.xpCurrent.toLocaleString()} XP</span>
+          <span>{xpCurrent.toLocaleString()} XP</span>
           <span className="text-indigo-300">{progress}%</span>
-          <span>{PROFILE_LEVEL.xpTarget.toLocaleString()} XP</span>
+          <span>{xpNext.toLocaleString()} XP</span>
         </div>
       </div>
 
-      {/* Next Level Reward Card */}
-      {PROFILE_LEVEL.nextReward && (
+      {/* Tier info */}
+      {tierDescription && (
         <div className="mt-4 p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-start gap-3 relative z-10">
           <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
             <Award size={18} />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Siguiente Recompensa</p>
-            <p className="text-xs font-bold text-slate-200 mt-0.5">{PROFILE_LEVEL.nextReward.title}</p>
-            <p className="text-[11px] text-slate-400 leading-snug mt-0.5">{PROFILE_LEVEL.nextReward.rewardText}</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tu Rango</p>
+            <p className="text-xs font-bold text-slate-200 mt-0.5">{tierName}</p>
+            <p className="text-[11px] text-slate-400 leading-snug mt-0.5">{tierDescription}</p>
           </div>
         </div>
       )}
 
-      {/* Interactive Accordion Trigger */}
+      {/* XP Breakdown Accordion */}
       <button
         type="button"
         onClick={() => setShowXpInfo(!showXpInfo)}
@@ -111,7 +138,6 @@ export default function ProfileLevelCard() {
         {showXpInfo ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </button>
 
-      {/* Accordion Content */}
       <AnimatePresence initial={false}>
         {showXpInfo && (
           <motion.div

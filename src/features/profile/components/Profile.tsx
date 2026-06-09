@@ -1,18 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useApiFetch } from "../../../lib/api";
 import { MapPin, Phone, User as UserIcon, Mail, Info } from "lucide-react";
 import ProfileHero from "./ProfileHero";
 import ProfileLevelCard from "./ProfileLevelCard";
 import ProfileStatsGrid from "./ProfileStatsGrid";
-import ProfileAchievements from "./ProfileAchievements";
+import ProfileAchievements, { UserAchievement } from "./ProfileAchievements";
 import ProfileEditSheet, { ProfileEditForm } from "./ProfileEditSheet";
-import { PROFILE_LEVEL } from "../data/profileMock";
+
+interface UserLevel {
+  level: number;
+  xp_current: number;
+  xp_next: number;
+  tier?: { name: string; description?: string } | null;
+}
 
 export default function Profile() {
   const { user, updateUser } = useAuth();
   const api = useApiFetch();
   const [isEditing, setIsEditing] = useState(false);
+
+  const [userLevel, setUserLevel] = useState<UserLevel | null>(null);
+  const [levelLoading, setLevelLoading] = useState(true);
+  const [achievements, setAchievements] = useState<UserAchievement[]>([]);
+  const [achievementsLoading, setAchievementsLoading] = useState(true);
+
+  useEffect(() => {
+    api<UserLevel>("/api/levels/me")
+      .then(({ data }) => setUserLevel(data))
+      .catch(console.error)
+      .finally(() => setLevelLoading(false));
+
+    api<UserAchievement[]>("/api/levels/me/achievements")
+      .then(({ data }) => setAchievements(Array.isArray(data) ? data : []))
+      .catch(console.error)
+      .finally(() => setAchievementsLoading(false));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const [editForm, setEditForm] = useState<ProfileEditForm>({
     name: user?.name || "",
     avatar: user?.avatar || "",
@@ -118,7 +141,7 @@ export default function Profile() {
   };
 
   const subtitle = user?.bio
-    ? `${user.bio} • Nivel ${PROFILE_LEVEL.level}`
+    ? `${user.bio}${userLevel ? ` • Nivel ${userLevel.level}` : ""}`
     : undefined;
 
   return (
@@ -132,11 +155,18 @@ export default function Profile() {
         />
 
         <div className="space-y-6 px-4 md:px-0">
-          <ProfileLevelCard />
+          <ProfileLevelCard
+            level={userLevel?.level ?? 1}
+            xpCurrent={userLevel?.xp_current ?? 0}
+            xpNext={userLevel?.xp_next ?? 100}
+            tierName={userLevel?.tier?.name}
+            tierDescription={userLevel?.tier?.description}
+            loading={levelLoading}
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProfileStatsGrid />
-            
+            <ProfileStatsGrid badgeCount={achievementsLoading ? undefined : achievements.length} />
+
             {/* New Personal Info Details Card */}
             <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-sm flex flex-col justify-between">
               <div>
@@ -194,7 +224,7 @@ export default function Profile() {
             </div>
           </div>
 
-          <ProfileAchievements />
+          <ProfileAchievements achievements={achievements} loading={achievementsLoading} />
         </div>
 
         {/* Panel de edición en desktop */}

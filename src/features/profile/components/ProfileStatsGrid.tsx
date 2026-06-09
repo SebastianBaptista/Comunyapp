@@ -9,10 +9,20 @@ const iconMap = {
   trophy: Trophy,
 };
 
-export default function ProfileStatsGrid() {
+interface Props {
+  badgeCount?: number;
+}
+
+export default function ProfileStatsGrid({ badgeCount }: Props) {
+  const stats = PROFILE_STATS.map((s) =>
+    s.label === "Insignias" && badgeCount !== undefined
+      ? { ...s, value: String(badgeCount) }
+      : s
+  );
+
   return (
     <div className="grid grid-cols-2 gap-3">
-      {PROFILE_STATS.map((stat) => {
+      {stats.map((stat) => {
         const Icon = iconMap[stat.icon];
         return (
           <div
