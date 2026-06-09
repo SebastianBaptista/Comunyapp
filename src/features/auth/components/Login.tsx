@@ -56,9 +56,9 @@ export default function Login({ onGoToRegister }: LoginProps) {
               <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
               <span className="font-bold text-2xl tracking-tight">Ecom Club</span>
             </div>
-            <h1 className="text-5xl font-black mb-6 leading-[1.1] tracking-tight">Vuelve a tu<br />comunidad.</h1>
+            <h1 className="text-5xl font-black mb-6 leading-[1.1] tracking-tight">La comunidad de<br />Ecommerce más<br />grande de Venezuela.</h1>
             <p className="text-slate-400 text-lg font-medium max-w-sm">
-              Conecta con expertos, aprende nuevas habilidades y comparte tu progreso.
+              Aprende de los mejores, escala tus tiendas online y conecta con los principales referentes del comercio electrónico en el país.
             </p>
           </div>
 
