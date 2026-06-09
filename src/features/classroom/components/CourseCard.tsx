@@ -35,18 +35,18 @@ export default function CourseCard({ course, index, onClick, onEdit }: CourseCar
             alt={course.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/95 backdrop-blur-sm rounded-full text-[10px] font-black text-orange-700 uppercase tracking-wide">
+          <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/95 backdrop-blur-sm rounded-full text-[10px] font-black text-violet-700 uppercase tracking-wide">
             {course.category}
           </span>
         </div>
 
         <div className="flex-1 p-4 sm:p-5 min-w-0 flex flex-col">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide flex items-center gap-1.5">
-            <Clock size={12} className="text-orange-500" />
+            <Clock size={12} className="text-violet-500" />
             {course.module}
           </span>
 
-          <h4 className="text-base font-black text-slate-900 mt-1 leading-snug group-hover:text-orange-700 transition-colors line-clamp-2">
+          <h4 className="text-base font-black text-slate-900 mt-1 leading-snug group-hover:text-violet-700 transition-colors line-clamp-2">
             {course.title}
           </h4>
 
@@ -57,12 +57,12 @@ export default function CourseCard({ course, index, onClick, onEdit }: CourseCar
           <div className="mt-auto pt-3 flex items-center gap-3">
             <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
               <div
-                className="h-full rounded-full bg-linear-to-r from-orange-500 to-amber-400 transition-all duration-700"
+                className="h-full rounded-full bg-linear-to-r from-violet-500 to-fuchsia-400 transition-all duration-700"
                 style={{ width: `${course.progress}%` }}
               />
             </div>
-            <span className="text-[10px] font-black text-orange-600 tabular-nums">{course.progress}%</span>
-            <ChevronRight size={18} className="text-slate-300 group-hover:text-orange-500 shrink-0" />
+            <span className="text-[10px] font-black text-violet-600 tabular-nums">{course.progress}%</span>
+            <ChevronRight size={18} className="text-slate-300 group-hover:text-violet-500 shrink-0" />
             {onEdit && (
               <button
                 type="button"
@@ -70,7 +70,7 @@ export default function CourseCard({ course, index, onClick, onEdit }: CourseCar
                   e.stopPropagation();
                   onEdit();
                 }}
-                className="ml-2 px-3 py-1 rounded-xl bg-orange-100 text-orange-700 font-bold text-xs hover:bg-orange-200 transition-colors z-20"
+                className="ml-2 px-3 py-1 rounded-xl bg-violet-100 text-violet-700 font-bold text-xs hover:bg-violet-200 transition-colors z-20"
               >
                 Editar
               </button>

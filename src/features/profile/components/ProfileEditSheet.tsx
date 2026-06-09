@@ -71,7 +71,7 @@ export default function ProfileEditSheet({
                   type="text"
                   value={form.name}
                   onChange={(e) => onChange({ ...form, name: e.target.value })}
-                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
+                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
                 />
               </div>
 
@@ -86,13 +86,13 @@ export default function ProfileEditSheet({
                     value={form.avatar}
                     onChange={(e) => onChange({ ...form, avatar: e.target.value })}
                     placeholder="URL o sube una imagen..."
-                    className="flex-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none transition-all"
+                    className="flex-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none transition-all"
                   />
                   <label
                     className={`flex items-center justify-center px-4 rounded-xl ${
                       isUploadingImage
-                        ? "bg-orange-100 text-orange-300 cursor-not-allowed"
-                        : "bg-orange-100 text-orange-600 cursor-pointer hover:bg-orange-200"
+                        ? "bg-violet-100 text-violet-300 cursor-not-allowed"
+                        : "bg-violet-100 text-violet-600 cursor-pointer hover:bg-violet-200"
                     }`}
                   >
                     {isUploadingImage ? (
@@ -119,7 +119,7 @@ export default function ProfileEditSheet({
                 <select
                   value={form.gender}
                   onChange={(e) => onChange({ ...form, gender: e.target.value })}
-                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all appearance-none cursor-pointer"
+                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all appearance-none cursor-pointer"
                 >
                   <option value="">No especificado</option>
                   <option value="Masculino">Masculino</option>
@@ -138,7 +138,7 @@ export default function ProfileEditSheet({
                   value={form.city}
                   placeholder="Ej. Madrid, Barcelona..."
                   onChange={(e) => onChange({ ...form, city: e.target.value })}
-                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
+                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
                 />
               </div>
 
@@ -152,7 +152,7 @@ export default function ProfileEditSheet({
                   value={form.phone}
                   placeholder="Ej. +34 600 000 000"
                   onChange={(e) => onChange({ ...form, phone: e.target.value })}
-                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
+                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none transition-all"
                 />
               </div>
 
@@ -166,7 +166,7 @@ export default function ProfileEditSheet({
                   onChange={(e) => onChange({ ...form, bio: e.target.value })}
                   rows={3}
                   placeholder="Explorador de Ideas..."
-                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none resize-none transition-all"
+                  className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none resize-none transition-all"
                 />
               </div>
 
@@ -175,7 +175,7 @@ export default function ProfileEditSheet({
                 type="button"
                 onClick={onSave}
                 disabled={isSaving}
-                className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#8B5E3C] text-white font-bold rounded-2xl hover:bg-[#7a5235] disabled:opacity-50 transition-all shadow-md shadow-amber-900/10 active:scale-[0.98]"
+                className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#ae3df7] text-white font-bold rounded-2xl hover:bg-[#921be2] disabled:opacity-50 transition-all shadow-md shadow-violet-950/10 active:scale-[0.98]"
               >
                 {isSaving ? "Guardando..." : (
                   <>

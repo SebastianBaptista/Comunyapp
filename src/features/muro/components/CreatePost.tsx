@@ -85,7 +85,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
         {user?.avatar ? (
           <img src={user.avatar} alt={user.name ?? "Usuario"} className="w-10 h-10 rounded-2xl object-cover flex-shrink-0" />
         ) : (
-          <div className="w-10 h-10 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 font-bold shadow-inner flex-shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-600 font-bold shadow-inner flex-shrink-0">
             {user?.name?.[0]?.toUpperCase() ?? "U"}
           </div>
         )}
@@ -115,7 +115,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
         <button
           onClick={handleSubmit}
           disabled={!value.trim()}
-          className="p-3 bg-[#8B5E3C] text-white rounded-2xl shadow-md shadow-amber-900/10 hover:bg-[#7a5235] active:scale-[0.98] disabled:opacity-50 disabled:grayscale transition-all"
+          className="p-3 bg-[#ae3df7] text-white rounded-2xl shadow-md shadow-violet-950/10 hover:bg-[#921be2] active:scale-[0.98] disabled:opacity-50 disabled:grayscale transition-all"
         >
           <Send size={20} />
         </button>
@@ -143,12 +143,12 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
               onChange={(e) => setNewTag(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleCreateTag()}
               placeholder="Nuevo tag..."
-              className="flex-1 bg-slate-50 rounded-xl px-3 py-1.5 text-xs font-medium outline-none border border-slate-200 focus:border-orange-300 transition-colors placeholder:text-slate-400"
+              className="flex-1 bg-slate-50 rounded-xl px-3 py-1.5 text-xs font-medium outline-none border border-slate-200 focus:border-violet-300 transition-colors placeholder:text-slate-400"
             />
             <button
               onClick={handleCreateTag}
               disabled={!newTag.trim() || creatingTag}
-              className="flex items-center gap-1 px-3 py-1.5 bg-[#8B5E3C] text-white rounded-xl text-xs font-bold disabled:opacity-40 hover:bg-[#7a5235] transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 bg-[#ae3df7] text-white rounded-xl text-xs font-bold disabled:opacity-40 hover:bg-[#921be2] transition-colors"
             >
               <Plus size={13} /> Crear
             </button>
@@ -160,7 +160,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
                 key={tag.id}
                 className={`flex items-center gap-1 pl-3 pr-1.5 py-1.5 rounded-full text-xs font-bold transition-all ${
                   selectedIds.includes(tag.id)
-                    ? "bg-orange-500 text-white shadow-sm"
+                    ? "bg-violet-500 text-white shadow-sm"
                     : "bg-slate-100 text-slate-500"
                 }`}
               >

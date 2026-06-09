@@ -8,10 +8,11 @@ import express from "express";
 import http from "http";
 import https from "https";
 import path from "path";
-import authRouter from "./routes/auth.js";
-import postsRouter from "./routes/posts.js";
-import coursesRouter from "./routes/courses.js";
-import tagsRouter from "./routes/tags.js";
+// Legacy Express routes are disabled so all /api/* requests proxy to FastAPI backend
+// import authRouter from "./routes/auth.js";
+// import postsRouter from "./routes/posts.js";
+// import coursesRouter from "./routes/courses.js";
+// import tagsRouter from "./routes/tags.js";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3000", 10);
@@ -49,10 +50,11 @@ function proxyToPython(req: express.Request, res: express.Response, _next: expre
 
 app.use(express.json({ limit: "20mb" }));
 
-app.use("/api/auth", authRouter);
-app.use("/api/posts", postsRouter);
-app.use("/api/courses", coursesRouter);
-app.use("/api/tags", tagsRouter);
+// Legacy routers are commented out to allow app.all("/api/*", proxyToPython) to intercept all api requests
+// app.use("/api/auth", authRouter);
+// app.use("/api/posts", postsRouter);
+// app.use("/api/courses", coursesRouter);
+// app.use("/api/tags", tagsRouter);
 
 app.all("/api/*", proxyToPython);
 

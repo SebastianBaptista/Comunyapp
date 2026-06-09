@@ -99,7 +99,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-2 text-slate-500 hover:text-orange-600 font-bold transition-colors text-sm"
+          className="flex items-center gap-2 text-slate-500 hover:text-violet-600 font-bold transition-colors text-sm"
         >
           <ArrowLeft size={18} /> Volver a cursos
         </button>
@@ -107,7 +107,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
           <button
             type="button"
             onClick={onEdit}
-            className="ml-2 px-3 py-1 rounded-xl bg-orange-100 text-orange-700 font-bold text-xs hover:bg-orange-200 transition-colors"
+            className="ml-2 px-3 py-1 rounded-xl bg-violet-100 text-violet-700 font-bold text-xs hover:bg-violet-200 transition-colors"
           >
             Editar curso
           </button>
@@ -115,7 +115,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
       </div>
 
       {activeVideo ? (
-        <div className="rounded-3xl overflow-hidden aspect-video shadow-lg border-2 border-orange-100 bg-slate-900 relative">
+        <div className="rounded-3xl overflow-hidden aspect-video shadow-lg border-2 border-violet-100 bg-slate-900 relative">
           <iframe
             src={activeVideo}
             title={playable[activeModule]?.title ?? course.title}
@@ -125,7 +125,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
           />
         </div>
       ) : (
-        <div className="rounded-3xl overflow-hidden aspect-video border-2 border-orange-100 bg-slate-100 flex items-center justify-center">
+        <div className="rounded-3xl overflow-hidden aspect-video border-2 border-violet-100 bg-slate-100 flex items-center justify-center">
           <img
             src={course.thumbnail}
             alt={course.title}
@@ -134,8 +134,8 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
         </div>
       )}
 
-      <div className="rounded-3xl border-2 border-orange-200 bg-sky-50/80 p-5 shadow-sm">
-        <span className="inline-flex px-3 py-1 rounded-full bg-orange-500 text-white text-[10px] font-black uppercase tracking-wider">
+      <div className="rounded-3xl border-2 border-violet-200 bg-sky-50/80 p-5 shadow-sm">
+        <span className="inline-flex px-3 py-1 rounded-full bg-violet-500 text-white text-[10px] font-black uppercase tracking-wider">
           {course.category}
         </span>
         <h1 className="text-xl font-black text-slate-900 mt-3 leading-tight">{course.title}</h1>
@@ -147,7 +147,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
 
         {isLoading ? (
           <div className="py-6 flex justify-center">
-            <div className="w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : chapters.length === 0 ? (
           <p className="text-sm font-medium text-slate-500">
@@ -164,7 +164,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                 return (
                   <div
                     key={ch.id}
-                    className="rounded-2xl border-2 border-orange-200 bg-orange-50/40 p-4 space-y-3"
+                    className="rounded-2xl border-2 border-violet-200 bg-violet-50/40 p-4 space-y-3"
                   >
                     <p className="text-sm font-black text-slate-900">Editar capítulo</p>
 
@@ -173,21 +173,21 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
                       placeholder="Título del capítulo *"
-                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-bold outline-none focus:ring-2 focus:ring-orange-200"
+                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-bold outline-none focus:ring-2 focus:ring-violet-200"
                     />
                     <input
                       type="url"
                       value={editVideoUrl}
                       onChange={(e) => setEditVideoUrl(e.target.value)}
                       placeholder="URL del video (YouTube, opcional)"
-                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-medium outline-none focus:ring-2 focus:ring-orange-200"
+                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-medium outline-none focus:ring-2 focus:ring-violet-200"
                     />
                     <input
                       type="text"
                       value={editDuration}
                       onChange={(e) => setEditDuration(e.target.value)}
                       placeholder="Duración (ej. 10:00, opcional)"
-                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-medium outline-none focus:ring-2 focus:ring-orange-200"
+                      className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-medium outline-none focus:ring-2 focus:ring-violet-200"
                     />
 
                     {editError && (
@@ -199,7 +199,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                         type="button"
                         onClick={() => saveEdit(ch.id)}
                         disabled={isSavingEdit}
-                        className="flex-1 py-2.5 bg-[#8B5E3C] text-white text-sm font-bold rounded-xl disabled:opacity-50"
+                        className="flex-1 py-2.5 bg-[#ae3df7] text-white text-sm font-bold rounded-xl disabled:opacity-50"
                       >
                         {isSavingEdit ? "Guardando..." : "Guardar"}
                       </button>
@@ -221,7 +221,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                   key={ch.id}
                   className={`flex items-start gap-3 p-4 rounded-2xl border-2 transition-all ${
                     isActive
-                      ? "border-orange-500 bg-orange-50 shadow-sm"
+                      ? "border-violet-500 bg-violet-50 shadow-sm"
                       : "border-slate-100 bg-white"
                   }`}
                 >
@@ -235,7 +235,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                       {isActive ? <CheckCircle size={20} /> : <PlayCircle size={20} />}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h4 className={`font-bold text-sm ${isActive ? "text-orange-900" : "text-slate-700"}`}>
+                      <h4 className={`font-bold text-sm ${isActive ? "text-violet-900" : "text-slate-700"}`}>
                         {ch.title}
                       </h4>
                       {ch.duration && (
@@ -253,7 +253,7 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                     <button
                       type="button"
                       onClick={() => startEdit(ch)}
-                      className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-orange-600 hover:bg-orange-50 transition-colors"
+                      className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-violet-600 hover:bg-violet-50 transition-colors"
                       title="Editar capítulo"
                     >
                       <Pencil size={14} />

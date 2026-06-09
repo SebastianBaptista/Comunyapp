@@ -25,7 +25,7 @@ export default function ProfileRanking() {
             key={entry.rank}
             className={`flex items-center gap-3 p-3 rounded-2xl transition-all ${
               entry.isYou
-                ? "bg-orange-500 text-white shadow-lg shadow-orange-200/60"
+                ? "bg-violet-500 text-white shadow-lg shadow-violet-200/60"
                 : "bg-white text-slate-800"
             }`}
           >

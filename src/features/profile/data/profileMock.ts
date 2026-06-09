@@ -23,7 +23,7 @@ export const XP_BREAKDOWN = [
 export const PROFILE_STATS = [
   { label: "Días de Racha", value: "15", icon: "flame" as const, bg: "bg-violet-100", iconColor: "text-violet-600" },
   { label: "Impacto Social", value: "1.2k", icon: "users" as const, bg: "bg-amber-100", iconColor: "text-amber-600" },
-  { label: "Lecciones", value: "48", icon: "book" as const, bg: "bg-orange-100", iconColor: "text-orange-600" },
+  { label: "Lecciones", value: "48", icon: "book" as const, bg: "bg-violet-100", iconColor: "text-violet-600" },
   { label: "Insignias", value: "8", icon: "trophy" as const, bg: "bg-sky-100", iconColor: "text-sky-600" },
 ];
 
@@ -37,9 +37,9 @@ export const PROFILE_ACHIEVEMENTS = [
     tier: "gold",
     description: "Miembro fundador que se unió en las primeras 24 horas del lanzamiento de la plataforma.",
     unlockedAt: "10 Ene 2026",
-    ring: "ring-orange-200",
-    bg: "bg-orange-50",
-    color: "text-orange-500"
+    ring: "ring-violet-200",
+    bg: "bg-violet-50",
+    color: "text-violet-500"
   },
   {
     id: "creativo",
@@ -142,8 +142,8 @@ export const PROFILE_ACTIVITY = [
     text: "Completaste la lección **'Diseño de Sistemas'**",
     time: "Hace 2 horas",
     icon: "graduation" as const,
-    iconBg: "bg-orange-100",
-    iconColor: "text-orange-600",
+    iconBg: "bg-violet-100",
+    iconColor: "text-violet-600",
   },
   {
     id: "2",

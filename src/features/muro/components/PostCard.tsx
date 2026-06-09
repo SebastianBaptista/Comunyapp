@@ -138,12 +138,12 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.1 }}
-      className={`bg-white rounded-3xl border p-6 shadow-sm hover:shadow-md transition-all group ${post.pinned ? "border-orange-200 ring-1 ring-orange-100" : "border-slate-100"}`}
+      className={`bg-white rounded-3xl border p-6 shadow-sm hover:shadow-md transition-all group ${post.pinned ? "border-violet-200 ring-1 ring-violet-100" : "border-slate-100"}`}
     >
       {/* Badge pin */}
       {post.pinned && (
-        <div className="flex items-center gap-1.5 text-orange-500 text-xs font-bold mb-3">
-          <Pin size={12} className="fill-orange-500" />
+        <div className="flex items-center gap-1.5 text-violet-500 text-xs font-bold mb-3">
+          <Pin size={12} className="fill-violet-500" />
           Publicación fijada
         </div>
       )}
@@ -155,13 +155,13 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
             {post.avatar ? (
               <img src={post.avatar} alt={post.author} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-lg">
+              <div className="w-full h-full bg-violet-100 flex items-center justify-center text-violet-600 font-bold text-lg">
                 {post.author?.[0]?.toUpperCase() ?? "U"}
               </div>
             )}
           </div>
           <div>
-            <h4 className="font-black text-slate-900 group-hover:text-orange-600 transition-colors">{post.author}</h4>
+            <h4 className="font-black text-slate-900 group-hover:text-violet-600 transition-colors">{post.author}</h4>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
               {post.role} • {timeAgo(post.created_at)}
             </p>
@@ -196,7 +196,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
                   onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "fijar publicaciones")) onPin(post.id); }}
                   className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
                 >
-                  <Pin size={15} className={post.pinned ? "fill-orange-500 text-orange-500" : "text-orange-500"} />
+                  <Pin size={15} className={post.pinned ? "fill-violet-500 text-violet-500" : "text-violet-500"} />
                   {post.pinned ? "Desfijar" : "Fijar post"}
                 </button>
                 <button
@@ -219,7 +219,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
             autoFocus
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
-            className="w-full bg-slate-50 rounded-2xl px-4 py-3 text-slate-600 font-medium leading-relaxed outline-none resize-none border border-slate-200 focus:border-orange-300 transition-colors"
+            className="w-full bg-slate-50 rounded-2xl px-4 py-3 text-slate-600 font-medium leading-relaxed outline-none resize-none border border-slate-200 focus:border-violet-300 transition-colors"
             rows={3}
           />
 
@@ -273,8 +273,8 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
                     )}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                       selectedTagIds.includes(tag.id)
-                        ? "bg-orange-500 text-white"
-                        : "bg-slate-100 text-slate-500 hover:bg-orange-50 hover:text-orange-600"
+                        ? "bg-violet-500 text-white"
+                        : "bg-slate-100 text-slate-500 hover:bg-violet-50 hover:text-violet-600"
                     }`}
                   >
                     #{tag.name}
@@ -289,7 +289,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
             <button onClick={() => setEditing(false)} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition-colors">
               <X size={13} /> Cancelar
             </button>
-            <button onClick={handleSaveEdit} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#8B5E3C] text-white hover:bg-[#7a5235] transition-colors shadow-sm">
+            <button onClick={handleSaveEdit} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#ae3df7] text-white hover:bg-[#921be2] transition-colors shadow-sm">
               <Check size={13} /> Guardar
             </button>
           </div>
@@ -319,7 +319,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
       {post.tags && post.tags.length > 0 && (
         <div className="flex gap-2 flex-wrap mb-4">
           {post.tags.map((tag) => (
-            <span key={tag} className="px-3 py-1 bg-orange-50 text-orange-600 text-xs font-bold rounded-full border border-orange-100">
+            <span key={tag} className="px-3 py-1 bg-violet-50 text-violet-600 text-xs font-bold rounded-full border border-violet-100">
               {tag}
             </span>
           ))}
@@ -430,7 +430,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
           <span>{commentsCount}</span>
         </button>
 
-        <button className="ml-auto p-2 bg-slate-50 text-slate-400 hover:bg-orange-50 hover:text-orange-500 rounded-xl transition-all">
+        <button className="ml-auto p-2 bg-slate-50 text-slate-400 hover:bg-violet-50 hover:text-violet-500 rounded-xl transition-all">
           <Share2 size={18} />
         </button>
       </div>

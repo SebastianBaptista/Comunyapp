@@ -36,9 +36,9 @@ function resolveStatusView(subscriptionStatus: string | null | undefined, latest
   if (subscriptionStatus === "expired") {
     return {
       icon: <AlertTriangle size={32} />,
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-500",
-      badgeCls: "bg-orange-50 text-orange-600 border border-orange-200",
+      iconBg: "bg-violet-50",
+      iconColor: "text-violet-500",
+      badgeCls: "bg-violet-50 text-violet-600 border border-violet-200",
       badgeLabel: "Suscripción expirada",
       title: "Tu suscripción ha expirado",
       description:

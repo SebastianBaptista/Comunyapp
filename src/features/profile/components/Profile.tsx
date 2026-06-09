@@ -244,7 +244,7 @@ export default function Profile() {
                     type="text"
                     value={editForm.name}
                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-orange-200"
+                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-violet-200"
                   />
                 </div>
 
@@ -257,7 +257,7 @@ export default function Profile() {
                     value={editForm.bio}
                     onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
                     rows={2}
-                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-medium outline-none resize-none focus:ring-2 focus:ring-orange-200"
+                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-medium outline-none resize-none focus:ring-2 focus:ring-violet-200"
                   />
                 </div>
 
@@ -270,7 +270,7 @@ export default function Profile() {
                     <select
                       value={editForm.gender}
                       onChange={(e) => setEditForm({ ...editForm, gender: e.target.value })}
-                      className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-3 text-sm font-bold outline-none focus:ring-2 focus:ring-orange-200 cursor-pointer"
+                      className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-3 text-sm font-bold outline-none focus:ring-2 focus:ring-violet-200 cursor-pointer"
                     >
                       <option value="">No especificado</option>
                       <option value="Masculino">Masculino</option>
@@ -286,7 +286,7 @@ export default function Profile() {
                       type="text"
                       value={editForm.city}
                       onChange={(e) => setEditForm({ ...editForm, city: e.target.value })}
-                      className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-orange-200"
+                      className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-violet-200"
                     />
                   </div>
                 </div>
@@ -300,7 +300,7 @@ export default function Profile() {
                     type="tel"
                     value={editForm.phone}
                     onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-orange-200"
+                    className="w-full mt-1 bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-sm font-bold outline-none focus:ring-2 focus:ring-violet-200"
                   />
                 </div>
 
@@ -310,7 +310,7 @@ export default function Profile() {
                     type="button"
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="flex-1 py-3 bg-[#8B5E3C] text-white font-bold rounded-2xl disabled:opacity-50 hover:bg-[#7a5235] transition-colors shadow-md active:scale-[0.98]"
+                    className="flex-1 py-3 bg-[#ae3df7] text-white font-bold rounded-2xl disabled:opacity-50 hover:bg-[#921be2] transition-colors shadow-md active:scale-[0.98]"
                   >
                     {isSaving ? "Guardando..." : "Guardar cambios"}
                   </button>

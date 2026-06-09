@@ -139,7 +139,7 @@ export default function Layout({ children, onLogout }: LayoutProps) {
                 to={item.path}
                 className={({ isActive }) =>
                   `flex flex-col items-center gap-1 min-w-[4.5rem] py-1 transition-all ${
-                    isActive ? "text-orange-600" : "text-slate-400"
+                    isActive ? "text-violet-600" : "text-slate-400"
                   }`
                 }
               >
@@ -148,13 +148,13 @@ export default function Layout({ children, onLogout }: LayoutProps) {
                     <span
                       className={`flex items-center justify-center rounded-full transition-all ${
                         isActive
-                          ? "w-12 h-12 bg-orange-500 text-white shadow-lg shadow-orange-200/70 -mt-3"
+                          ? "w-12 h-12 bg-violet-500 text-white shadow-lg shadow-violet-200/70 -mt-3"
                           : "w-10 h-10"
                       }`}
                     >
                       <Icon size={isActive ? 22 : 20} strokeWidth={isActive ? 2.5 : 2} />
                     </span>
-                    <span className={`text-[10px] font-bold ${isActive ? "text-orange-600" : "text-slate-400"}`}>
+                    <span className={`text-[10px] font-bold ${isActive ? "text-violet-600" : "text-slate-400"}`}>
                       {item.label}
                     </span>
                   </>

@@ -151,7 +151,7 @@ function CommentItem({ postId, comment, depth, onAddComment, onReact }: CommentI
       {comment.avatar ? (
         <img src={comment.avatar} alt={comment.author} className="w-8 h-8 rounded-xl object-cover shrink-0 mt-0.5" />
       ) : (
-        <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0 mt-0.5">
+        <div className="w-8 h-8 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 font-bold text-sm shrink-0 mt-0.5">
           {comment.author?.[0]?.toUpperCase() ?? "U"}
         </div>
       )}
@@ -240,7 +240,7 @@ function CommentItem({ postId, comment, depth, onAddComment, onReact }: CommentI
                 {user?.avatar ? (
                   <img src={user.avatar} alt={user.name ?? "U"} className="w-6 h-6 rounded-xl object-cover shrink-0" />
                 ) : (
-                  <div className="w-6 h-6 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0">
+                  <div className="w-6 h-6 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 font-bold text-xs shrink-0">
                     {user?.name?.[0]?.toUpperCase() ?? "U"}
                   </div>
                 )}
@@ -255,7 +255,7 @@ function CommentItem({ postId, comment, depth, onAddComment, onReact }: CommentI
                 <button
                   onClick={handleReply}
                   disabled={!replyValue.trim() || isSending}
-                  className="p-1.5 text-orange-600 hover:bg-orange-100 rounded-xl transition-all disabled:opacity-40"
+                  className="p-1.5 text-violet-600 hover:bg-violet-100 rounded-xl transition-all disabled:opacity-40"
                 >
                   <Send size={14} />
                 </button>
@@ -333,7 +333,7 @@ export default function CommentSection({ postId, comments, isLoading, onAddComme
             {user?.avatar ? (
               <img src={user.avatar} alt={user.name ?? "Usuario"} className="w-8 h-8 rounded-xl object-cover shrink-0" />
             ) : (
-              <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 font-bold text-sm shrink-0">
                 {user?.name?.[0]?.toUpperCase() ?? "U"}
               </div>
             )}
@@ -348,7 +348,7 @@ export default function CommentSection({ postId, comments, isLoading, onAddComme
               <button
                 onClick={handleSubmit}
                 disabled={!value.trim() || isSending}
-                className="p-1.5 text-orange-600 hover:bg-orange-100 rounded-xl transition-all disabled:opacity-40"
+                className="p-1.5 text-violet-600 hover:bg-violet-100 rounded-xl transition-all disabled:opacity-40"
               >
                 <Send size={16} />
               </button>

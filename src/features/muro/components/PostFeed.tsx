@@ -56,7 +56,7 @@ export default function PostFeed() {
               <img src={`https://i.pravatar.cc/100?u=${i}`} alt="user" />
             </div>
           ))}
-          <div className="w-10 h-10 rounded-full border-[3px] border-white bg-orange-500 text-[10px] flex items-center justify-center font-bold text-white shadow-sm">
+          <div className="w-10 h-10 rounded-full border-[3px] border-white bg-violet-500 text-[10px] flex items-center justify-center font-bold text-white shadow-sm">
             +12
           </div>
         </div>
@@ -74,8 +74,8 @@ export default function PostFeed() {
                 onClick={() => toggleTag(tag.name)}
                 className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                   selectedTags.includes(tag.name)
-                    ? "bg-orange-500 text-white shadow-sm"
-                    : "bg-slate-100 text-slate-500 hover:bg-orange-50 hover:text-orange-600"
+                    ? "bg-violet-500 text-white shadow-sm"
+                    : "bg-slate-100 text-slate-500 hover:bg-violet-50 hover:text-violet-600"
                 }`}
               >
                 #{tag.name}
@@ -112,7 +112,7 @@ export default function PostFeed() {
 
         {isLoadingMore && (
           <div className="flex justify-center py-4">
-            <div className="w-6 h-6 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
 

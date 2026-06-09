@@ -164,7 +164,7 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Ej. Emprendimiento 101"
-          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none"
+          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-bold outline-none"
         />
       </div>
 
@@ -177,7 +177,7 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
           placeholder="¿De qué trata este curso?"
-          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none resize-none"
+          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none resize-none"
         />
       </div>
 
@@ -190,7 +190,7 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Ej. Marketing, Finanzas, General..."
-          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-orange-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none"
+          className="w-full mt-1 bg-slate-50 border-2 border-transparent focus:border-violet-200 focus:bg-white rounded-xl py-3 px-4 text-sm font-medium outline-none"
         />
       </div>
 
@@ -209,10 +209,10 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
             )}
           </div>
           <label
-            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-orange-200 text-sm font-bold cursor-pointer transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-violet-200 text-sm font-bold cursor-pointer transition-colors ${
               isUploading
-                ? "bg-orange-50 text-orange-300 cursor-not-allowed"
-                : "bg-orange-50/50 text-orange-700 hover:bg-orange-50"
+                ? "bg-violet-50 text-violet-300 cursor-not-allowed"
+                : "bg-violet-50/50 text-violet-700 hover:bg-violet-50"
             }`}
           >
             {isUploading ? "Subiendo..." : "Elegir foto"}
@@ -245,7 +245,7 @@ export default function CreateCourseSheet({ open, onClose, onCreated, course }: 
         <button
           type="submit"
           disabled={isSaving || isDeleting || isUploading}
-          className="flex items-center justify-center gap-2 py-3.5 bg-[#8B5E3C] text-white font-bold rounded-2xl hover:bg-[#7a5235] disabled:opacity-50 transition-all cursor-pointer w-full"
+          className="flex items-center justify-center gap-2 py-3.5 bg-[#ae3df7] text-white font-bold rounded-2xl hover:bg-[#921be2] disabled:opacity-50 transition-all cursor-pointer w-full"
         >
           {isSaving ? "Guardando..." : (
             <><Save size={18} /> {isEdit ? "Guardar cambios" : "Crear curso"}</>

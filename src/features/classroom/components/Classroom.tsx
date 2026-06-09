@@ -56,7 +56,7 @@ export default function Classroom() {
           <button
             type="button"
             onClick={() => { if (requireAdmin(user?.role, "subir cursos")) setShowCreate(true); }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#8B5E3C] text-white text-sm font-bold shadow-md shadow-amber-900/10 hover:bg-[#7a5235] active:scale-[0.98] transition-all shrink-0"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#ae3df7] text-white text-sm font-bold shadow-md shadow-violet-950/10 hover:bg-[#921be2] active:scale-[0.98] transition-all shrink-0"
           >
             <Plus size={18} /> Subir curso
           </button>
@@ -69,7 +69,7 @@ export default function Classroom() {
         )}
 
         {courses.length === 0 ? (
-          <div className="rounded-3xl border-2 border-orange-200 bg-sky-50/80 p-8 text-center">
+          <div className="rounded-3xl border-2 border-violet-200 bg-sky-50/80 p-8 text-center">
             <p className="font-bold text-slate-700">No hay cursos todavía</p>
             <p className="text-sm text-slate-500 mt-1 mb-4">
               Crea tu primer curso con nombre, descripción e imagen.
@@ -77,7 +77,7 @@ export default function Classroom() {
             <button
               type="button"
               onClick={() => { if (requireAdmin(user?.role, "subir cursos")) setShowCreate(true); }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#8B5E3C] text-white text-sm font-bold"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#ae3df7] text-white text-sm font-bold"
             >
               <Plus size={18} /> Subir curso
             </button>

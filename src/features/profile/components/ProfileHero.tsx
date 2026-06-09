@@ -17,7 +17,7 @@ export default function ProfileHero({ name, avatar, subtitle, onEdit }: ProfileH
     <section>
       {/* Banner */}
       <div className="relative h-36 sm:h-40 overflow-hidden rounded-b-[2rem]">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-300 via-orange-400 to-rose-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-indigo-600 to-pink-500" />
         <svg
           className="absolute inset-0 w-full h-full opacity-90"
           viewBox="0 0 400 160"
@@ -38,16 +38,16 @@ export default function ProfileHero({ name, avatar, subtitle, onEdit }: ProfileH
       {/* Avatar + info */}
       <div className="flex flex-col items-center -mt-14 px-4 pb-2 relative z-10">
         <div className="relative">
-          <div className="w-28 h-28 rounded-full border-[5px] border-white shadow-xl overflow-hidden bg-orange-50">
+          <div className="w-28 h-28 rounded-full border-[5px] border-white shadow-xl overflow-hidden bg-violet-50">
             {avatar ? (
               <img src={avatar} alt={name} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-orange-600 font-black text-4xl bg-orange-100">
+              <div className="w-full h-full flex items-center justify-center text-violet-600 font-black text-4xl bg-violet-100">
                 {name[0]?.toUpperCase() ?? "U"}
               </div>
             )}
           </div>
-          <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-orange-500 border-[3px] border-white flex items-center justify-center text-white shadow-md">
+          <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-violet-500 border-[3px] border-white flex items-center justify-center text-white shadow-md">
             <Award size={16} strokeWidth={2.5} />
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function ProfileHero({ name, avatar, subtitle, onEdit }: ProfileH
           <button
             type="button"
             onClick={onEdit}
-            className="w-full py-3 rounded-2xl bg-[#8B5E3C] text-white text-sm font-bold shadow-md shadow-amber-900/10 hover:bg-[#7a5235] active:scale-[0.98] transition-all"
+            className="w-full py-3 rounded-2xl bg-[#ae3df7] text-white text-sm font-bold shadow-md shadow-violet-950/10 hover:bg-[#921be2] active:scale-[0.98] transition-all"
           >
             Editar perfil
           </button>
