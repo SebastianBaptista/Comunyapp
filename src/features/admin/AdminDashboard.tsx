@@ -182,7 +182,7 @@ function InvitationsPanel() {
       className="space-y-8"
     >
       {/* Invite form */}
-      <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-2 flex items-center gap-3">
           <UserPlus className="text-indigo-600" /> Enviar Invitación
         </h3>
@@ -227,7 +227,7 @@ function InvitationsPanel() {
       </div>
 
       {/* Invitations list */}
-      <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
@@ -255,12 +255,12 @@ function InvitationsPanel() {
             />
           </div>
           {/* Status tabs */}
-          <div className="flex bg-slate-100 p-1 rounded-2xl w-fit h-fit">
+          <div className="flex bg-slate-100 p-1 rounded-2xl w-full sm:w-fit h-fit overflow-x-auto">
             {(["todos", "pendiente", "usada", "expirada"] as StatusFilter[]).map((s) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
-                className={`px-4 py-2 rounded-xl text-xs font-black transition-all capitalize ${statusFilter === s ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all capitalize whitespace-nowrap ${statusFilter === s ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
               >
                 {s === "todos" ? "Todos" : s.charAt(0).toUpperCase() + s.slice(1)}
                 <span className={`ml-1.5 text-[10px] ${statusFilter === s ? "text-indigo-400" : "text-slate-400"}`}>
@@ -472,7 +472,7 @@ function PaymentsPanel() {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm"
+      className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
@@ -499,7 +499,7 @@ function PaymentsPanel() {
             className="w-full bg-slate-50 border-2 border-transparent focus:border-indigo-100 focus:bg-white rounded-2xl py-3 pl-11 pr-4 text-sm font-bold transition-all outline-none"
           />
         </div>
-        <div className="flex bg-slate-100 p-1 rounded-2xl w-fit h-fit overflow-x-auto">
+        <div className="flex bg-slate-100 p-1 rounded-2xl w-full sm:w-fit h-fit overflow-x-auto">
           {(["todos", "pending", "success", "failed"] as PaymentStatusFilter[]).map((s) => (
             <button
               key={s}
@@ -648,28 +648,28 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Panel de Administración</h1>
           <p className="text-slate-500 font-medium">Gestiona tu comunidad y finanzas desde un solo lugar.</p>
         </div>
-        <div className="flex bg-slate-100 p-1 rounded-2xl w-fit">
+        <div className="flex bg-slate-100 p-1 rounded-2xl w-full md:w-fit overflow-x-auto">
           <button
             onClick={() => setActiveTab("stats")}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${activeTab === 'stats' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${activeTab === 'stats' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
             Estadísticas
           </button>
           <button
             onClick={() => setActiveTab("invitaciones")}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${activeTab === 'invitaciones' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${activeTab === 'invitaciones' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
             Invitaciones
           </button>
           <button
             onClick={() => setActiveTab("pagos")}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${activeTab === 'pagos' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${activeTab === 'pagos' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
             Pagos
           </button>
           <button
             onClick={() => setActiveTab("settings")}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${activeTab === 'settings' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${activeTab === 'settings' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
             Configuración
           </button>
@@ -705,7 +705,7 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Main Chart */}
-            <div className="lg:col-span-8 bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+            <div className="lg:col-span-8 bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200 shadow-sm">
               <h3 className="text-xl font-black text-slate-900 mb-8">Ingresos por Mes</h3>
               <div className="h-[350px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -751,7 +751,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Sidebar Bar Chart */}
-            <div className="lg:col-span-4 bg-slate-900 p-8 rounded-[2.5rem] border border-slate-800 shadow-xl text-white">
+            <div className="lg:col-span-4 bg-slate-900 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-800 shadow-xl text-white">
               <h3 className="text-xl font-black mb-2">Actividad Semanal</h3>
               <p className="text-slate-400 text-sm font-medium mb-8">Nuevos miembros registrados por día.</p>
               <div className="h-[300px] w-full">
@@ -800,7 +800,7 @@ export default function AdminDashboard() {
           className="grid grid-cols-1 md:grid-cols-12 gap-8"
         >
           {/* Bank Settings Cell */}
-          <div className="md:col-span-12 bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm">
+          <div className="md:col-span-12 bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm">
             <h3 className="text-2xl font-black text-slate-900 mb-2 flex items-center gap-3">
               <CreditCard className="text-indigo-600" /> Información Bancaria
             </h3>
@@ -871,8 +871,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Quick Info Cell */}
-          <div className="md:col-span-12 bg-slate-50 border-2 border-slate-200 border-dashed rounded-[2.5rem] p-10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-6">
+          <div className="md:col-span-12 bg-slate-50 border-2 border-slate-200 border-dashed rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm">
                 <Activity size={32} />
               </div>
