@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
-  Users,
-  DollarSign,
-  TrendingUp,
   Activity,
   CreditCard,
   Building2,
   Briefcase,
   Save,
-  ArrowUpRight,
-  ArrowDownRight,
   Mail,
   Send,
   Trash2,
@@ -26,42 +21,11 @@ import {
   ThumbsDown,
   Banknote,
 } from "lucide-react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell
-} from "recharts";
 import { motion, AnimatePresence } from "motion/react";
 import { useApiFetch } from "../../lib/api";
 import type { Payment, PlanType } from "../../types";
 import GamificationPanel from "./GamificationPanel";
-
-const revenueData = [
-  { name: "Ene", value: 4000 },
-  { name: "Feb", value: 3000 },
-  { name: "Mar", value: 5000 },
-  { name: "Abr", value: 4500 },
-  { name: "May", value: 6000 },
-  { name: "Jun", value: 5500 },
-  { name: "Jul", value: 8500 },
-];
-
-const memberData = [
-  { name: "Lunes", users: 400 },
-  { name: "Martes", users: 300 },
-  { name: "Miércoles", users: 200 },
-  { name: "Jueves", users: 278 },
-  { name: "Viernes", users: 189 },
-  { name: "Sábado", users: 239 },
-  { name: "Domingo", users: 349 },
-];
+import AnalyticsPanel from "./AnalyticsPanel";
 
 interface Invitation {
   id: string;
@@ -634,13 +598,6 @@ export default function AdminDashboard() {
     routingNumber: "123456789",
   });
 
-  const stats = [
-    { label: "Miembros Totales", value: "12,450", change: "+12.5%", positive: true, icon: <Users className="text-blue-600" /> },
-    { label: "Ingresos Mensuales", value: "$45,200", change: "+24.3%", positive: true, icon: <DollarSign className="text-green-600" /> },
-    { label: "Tasa de Crecimiento", value: "8.2%", change: "-2.1%", positive: false, icon: <TrendingUp className="text-indigo-600" /> },
-    { label: "Usuarios Activos", value: "3,120", change: "+5.4%", positive: true, icon: <Activity className="text-purple-600" /> },
-  ];
-
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -683,118 +640,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {activeTab === "stats" && (
-        <div className="space-y-8">
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 bg-slate-50 rounded-2xl">
-                    {stat.icon}
-                  </div>
-                  <div className={`flex items-center text-xs font-black ${stat.positive ? 'text-green-500' : 'text-red-500'}`}>
-                    {stat.positive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-                    {stat.change}
-                  </div>
-                </div>
-                <p className="text-slate-500 text-xs font-black uppercase tracking-[0.1em]">{stat.label}</p>
-                <p className="text-3xl font-black text-slate-900 mt-1">{stat.value}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Main Chart */}
-            <div className="lg:col-span-8 bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200 shadow-sm">
-              <h3 className="text-xl font-black text-slate-900 mb-8">Ingresos por Mes</h3>
-              <div className="h-[350px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={revenueData}>
-                    <defs>
-                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1}/>
-                        <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis
-                      dataKey="name"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 700 }}
-                      dy={10}
-                    />
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 700 }}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        borderRadius: '16px',
-                        border: 'none',
-                        boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
-                        fontWeight: 'bold'
-                      }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#4f46e5"
-                      strokeWidth={4}
-                      fillOpacity={1}
-                      fill="url(#colorValue)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Sidebar Bar Chart */}
-            <div className="lg:col-span-4 bg-slate-900 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-800 shadow-xl text-white">
-              <h3 className="text-xl font-black mb-2">Actividad Semanal</h3>
-              <p className="text-slate-400 text-sm font-medium mb-8">Nuevos miembros registrados por día.</p>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={memberData}>
-                    <Bar dataKey="users" radius={[10, 10, 10, 10]}>
-                      {memberData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#6366f1" : "#4f46e5"} />
-                      ))}
-                    </Bar>
-                    <Tooltip
-                      cursor={{fill: 'transparent'}}
-                      contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff' }}
-                      itemStyle={{ color: '#fff' }}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-6 flex items-center justify-between">
-                <div className="text-center">
-                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Promedio</p>
-                  <p className="text-xl font-black">284</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Pico</p>
-                  <p className="text-xl font-black">400</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Total</p>
-                  <p className="text-xl font-black">1.9k</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {activeTab === "stats" && <AnalyticsPanel />}
 
       {activeTab === "invitaciones" && <InvitationsPanel />}
 

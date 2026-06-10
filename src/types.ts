@@ -76,6 +76,65 @@ export interface Comment {
   replies?: Comment[];
 }
 
+export interface AnalyticsMembersOverview {
+  total: number;
+  active: number;
+  inactive: number;
+  expired: number;
+  invited: number;
+  new_today: number;
+  new_this_month: number;
+}
+
+export interface AnalyticsRevenue {
+  today: number;
+  this_month: number;
+  total: number;
+  by_plan: { "1m": number; "3m": number; "6m": number; "1y": number };
+  payments_pending: number;
+  non_renewals: number;
+}
+
+export interface AnalyticsOverview {
+  members: AnalyticsMembersOverview;
+  revenue: AnalyticsRevenue;
+}
+
+export interface AnalyticsLocation {
+  city: string;
+  total: number;
+  percentage: number;
+}
+
+export interface AnalyticsAgeRange {
+  age_range: string;
+  total: number;
+  percentage: number;
+}
+
+export interface AnalyticsMembersDetail extends AnalyticsMembersOverview {
+  admin: number;
+  gender: { male: number; female: number; other: number };
+  locations: AnalyticsLocation[];
+  ages: AnalyticsAgeRange[];
+}
+
+export interface AnalyticsSnapshot {
+  snapshot_date: string;
+  total_members: number;
+  active_members: number;
+  inactive_members: number;
+  expired_members: number;
+  invited_members: number;
+  new_members: number;
+  revenue_day: number;
+  revenue_month: number;
+  payments_success: number;
+  payments_pending: number;
+  payments_failed: number;
+  non_renewals: number;
+}
+
 export interface Level {
   id: string;
   name: string;
