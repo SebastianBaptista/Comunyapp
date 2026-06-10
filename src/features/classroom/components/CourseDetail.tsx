@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { ArrowLeft, PlayCircle, CheckCircle, Pencil, X } from "lucide-react";
+import { ArrowLeft, PlayCircle, CheckCircle, Pencil, X, Trash2 } from "lucide-react";
 import { Course } from "../../../types";
 import { motion } from "motion/react";
 import { useCourseChapters } from "../hooks/useCourseChapters";
@@ -84,6 +84,23 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
       setEditError(err instanceof Error ? err.message : "Error al guardar");
     } finally {
       setIsSavingEdit(false);
+    }
+  }
+
+  async function handleDeleteChapter(chapterId: string, title: string) {
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar el capítulo "${title}"?`)) return;
+    
+    try {
+      await api(`/api/courses/${course.id}/chapters/${chapterId}`, {
+        method: "DELETE",
+      });
+      refetch();
+      onCourseUpdated?.();
+      if (playable[activeModule]?.id === chapterId) {
+        setActiveModule(0);
+      }
+    } catch (err) {
+      alert("Error al eliminar el capítulo: " + (err instanceof Error ? err.message : String(err)));
     }
   }
 
@@ -250,14 +267,24 @@ export default function CourseDetail({ course, onBack, onCourseUpdated, onEdit }
                   </button>
 
                   {userIsAdmin && (
-                    <button
-                      type="button"
-                      onClick={() => startEdit(ch)}
-                      className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-violet-600 hover:bg-violet-50 transition-colors"
-                      title="Editar capítulo"
-                    >
-                      <Pencil size={14} />
-                    </button>
+                    <div className="flex flex-col gap-1 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => startEdit(ch)}
+                        className="p-1.5 rounded-lg text-slate-300 hover:text-violet-600 hover:bg-violet-50 transition-colors"
+                        title="Editar capítulo"
+                      >
+                        <Pencil size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteChapter(ch.id, ch.title)}
+                        className="p-1.5 rounded-lg text-slate-300 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        title="Eliminar capítulo"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   )}
                 </div>
               );
