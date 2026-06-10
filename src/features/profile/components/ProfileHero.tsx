@@ -6,10 +6,11 @@ interface ProfileHeroProps {
   name: string;
   avatar?: string;
   subtitle?: string;
+  levelIcon?: string;
   onEdit: () => void;
 }
 
-export default function ProfileHero({ name, avatar, subtitle, onEdit }: ProfileHeroProps) {
+export default function ProfileHero({ name, avatar, subtitle, levelIcon, onEdit }: ProfileHeroProps) {
   const displaySubtitle =
     subtitle?.trim() || `${PROFILE_LEVEL.subtitle} • Nivel ${PROFILE_LEVEL.level}`;
 
@@ -47,8 +48,12 @@ export default function ProfileHero({ name, avatar, subtitle, onEdit }: ProfileH
               </div>
             )}
           </div>
-          <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-violet-500 border-[3px] border-white flex items-center justify-center text-white shadow-md">
-            <Award size={16} strokeWidth={2.5} />
+          <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-violet-500 border-[3px] border-white flex items-center justify-center text-white shadow-md overflow-hidden">
+            {levelIcon ? (
+              <img src={levelIcon} alt="Nivel" className="w-full h-full object-cover" />
+            ) : (
+              <Award size={16} strokeWidth={2.5} />
+            )}
           </div>
         </div>
 

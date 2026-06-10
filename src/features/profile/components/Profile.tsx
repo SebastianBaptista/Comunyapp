@@ -12,7 +12,7 @@ interface UserLevel {
   level: number;
   xp_current: number;
   xp_next: number;
-  tier?: { name: string; description?: string } | null;
+  tier?: { name: string; description?: string; icon_url?: string } | null;
 }
 
 export default function Profile() {
@@ -151,6 +151,7 @@ export default function Profile() {
           name={user?.name ?? "Usuario"}
           avatar={user?.avatar}
           subtitle={subtitle}
+          levelIcon={userLevel?.tier?.icon_url}
           onEdit={openEdit}
         />
 
