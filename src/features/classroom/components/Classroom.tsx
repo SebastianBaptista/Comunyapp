@@ -8,6 +8,7 @@ import CourseDetail from "./CourseDetail";
 import CreateCourseSheet from "./CreateCourseSheet";
 import Spinner from "../../../shared/ui/Spinner";
 import { Course } from "../../../types";
+import { api } from "../../../lib/api";
 
 export default function Classroom() {
   const { user } = useAuth();
@@ -15,6 +16,24 @@ export default function Classroom() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showCreate, setShowCreate] = useState(false);
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
+
+  const handleDeleteCourse = async (id: string, title: string) => {
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar el curso "${title}"? Esta acción no se puede deshacer.`)) {
+      return;
+    }
+    
+    try {
+      await api(`/api/courses/${id}`, {
+        method: "DELETE",
+      });
+      refetch();
+      if (selectedCourse?.id === id) {
+        setSelectedCourse(null);
+      }
+    } catch (err: any) {
+      alert("Error al eliminar el curso: " + err.message);
+    }
+  };
 
   React.useEffect(() => {
     if (selectedCourse) {
@@ -96,6 +115,11 @@ export default function Classroom() {
                     setShowCreate(true);
                   }
                 }}
+                onDelete={
+                  requireAdmin(user?.role, "eliminar cursos") 
+                    ? () => handleDeleteCourse(course.id, course.title) 
+                    : undefined
+                }
               />
             ))}
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight, Trash2 } from "lucide-react";
 import { motion } from "motion/react";
 import { Course } from "../../../types";
 
@@ -9,9 +9,10 @@ interface CourseCardProps {
   index: number;
   onClick?: () => void;
   onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-export default function CourseCard({ course, index, onClick, onEdit }: CourseCardProps) {
+export default function CourseCard({ course, index, onClick, onEdit, onDelete }: CourseCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -73,6 +74,20 @@ export default function CourseCard({ course, index, onClick, onEdit }: CourseCar
                 className="ml-2 px-3 py-1 rounded-xl bg-violet-100 text-violet-700 font-bold text-xs hover:bg-violet-200 transition-colors z-20"
               >
                 Editar
+              </button>
+            )}
+            {onDelete && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete();
+                }}
+                className="px-2.5 py-1 rounded-xl bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 font-bold text-xs transition-colors z-20 flex items-center justify-center"
+                aria-label="Eliminar"
+                title="Eliminar curso"
+              >
+                <Trash2 size={14} />
               </button>
             )}
           </div>

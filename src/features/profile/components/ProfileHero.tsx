@@ -48,13 +48,15 @@ export default function ProfileHero({ name, avatar, subtitle, levelIcon, onEdit 
               </div>
             )}
           </div>
-          <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-violet-500 border-[3px] border-white flex items-center justify-center text-white shadow-md overflow-hidden">
-            {levelIcon ? (
-              <img src={levelIcon} alt="Nivel" className="w-full h-full object-cover" />
-            ) : (
+          {levelIcon ? (
+            <div className="absolute -bottom-2 -right-2 w-12 h-12 flex items-center justify-center drop-shadow-lg">
+              <img src={levelIcon} alt="Nivel" className="w-full h-full object-contain" />
+            </div>
+          ) : (
+            <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-violet-500 border-[3px] border-white flex items-center justify-center text-white shadow-md">
               <Award size={16} strokeWidth={2.5} />
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         <h1 className="mt-4 text-2xl font-black text-slate-900 tracking-tight">{name}</h1>

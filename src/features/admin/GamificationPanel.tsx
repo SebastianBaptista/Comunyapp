@@ -63,7 +63,7 @@ export default function GamificationPanel() {
         canvas.width = img.width * scaleSize;
         canvas.height = img.height * scaleSize;
         ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+        const dataUrl = canvas.toDataURL("image/png");
         
         try {
           const { data } = await api<{ url: string }>(endpoint, {
