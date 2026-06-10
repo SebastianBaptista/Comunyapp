@@ -1,11 +1,11 @@
-import { MessageSquare, Share2, MoreHorizontal, Lightbulb, Smile, Pin, Pencil, Trash2, Check, X, ImagePlus } from "lucide-react";
+import { MessageSquare, MoreHorizontal, Lightbulb, Smile, Pin, Pencil, Trash2, Check, X, ImagePlus } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { Post } from "../../../types";
 import { useComments } from "../hooks/useComments";
 import CommentSection from "./CommentSection";
 import { useAuth } from "../../../context/AuthContext";
-import { requireAdmin } from "../../../lib/permissions";
+import { requireAdmin, isAdmin } from "../../../lib/permissions";
 import { useApiFetch } from "../../../lib/api";
 
 const REACTIONS = [
@@ -133,6 +133,10 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
     if (ok) onCommentAdded(post.id);
   };
 
+  const isOwner = user?.id === post.user_id;
+  const isAdminRole = isAdmin(user?.role);
+  const canManage = isOwner || isAdminRole;
+
   return (
     <motion.article
       initial={{ opacity: 0, scale: 0.95 }}
@@ -169,46 +173,50 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
         </div>
 
         {/* Menú tres puntos */}
-        <div className="relative" ref={menuRef}>
-          <button
-            onClick={() => setShowMenu((v) => !v)}
-            className="text-slate-300 hover:text-slate-900 transition-colors"
-          >
-            <MoreHorizontal size={24} />
-          </button>
+        {canManage && (
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={() => setShowMenu((v) => !v)}
+              className="text-slate-300 hover:text-slate-900 transition-colors"
+            >
+              <MoreHorizontal size={24} />
+            </button>
 
-          <AnimatePresence>
-            {showMenu && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -4 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -4 }}
-                transition={{ duration: 0.12 }}
-                className="absolute right-0 top-8 bg-white border border-slate-100 rounded-2xl shadow-lg z-20 overflow-hidden min-w-[160px]"
-              >
-                <button
-                  onClick={startEditing}
-                  className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+            <AnimatePresence>
+              {showMenu && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -4 }}
+                  transition={{ duration: 0.12 }}
+                  className="absolute right-0 top-8 bg-white border border-slate-100 rounded-2xl shadow-lg z-20 overflow-hidden min-w-[160px]"
                 >
-                  <Pencil size={15} className="text-indigo-500" /> Editar
-                </button>
-                <button
-                  onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "fijar publicaciones")) onPin(post.id); }}
-                  className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
-                >
-                  <Pin size={15} className={post.pinned ? "fill-violet-500 text-violet-500" : "text-violet-500"} />
-                  {post.pinned ? "Desfijar" : "Fijar post"}
-                </button>
-                <button
-                  onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "eliminar publicaciones")) onDelete(post.id); }}
-                  className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
-                >
-                  <Trash2 size={15} /> Eliminar
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                  <button
+                    onClick={startEditing}
+                    className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                  >
+                    <Pencil size={15} className="text-indigo-500" /> Editar
+                  </button>
+                  {isAdminRole && (
+                    <button
+                      onClick={() => { setShowMenu(false); if (requireAdmin(user?.role, "fijar publicaciones")) onPin(post.id); }}
+                      className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                    >
+                      <Pin size={15} className={post.pinned ? "fill-violet-500 text-violet-500" : "text-violet-500"} />
+                      {post.pinned ? "Desfijar" : "Fijar post"}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => { setShowMenu(false); onDelete(post.id); }}
+                    className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
+                  >
+                    <Trash2 size={15} /> Eliminar
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
 
       {/* Content / Edit mode */}
@@ -428,10 +436,6 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
         >
           <MessageSquare size={20} />
           <span>{commentsCount}</span>
-        </button>
-
-        <button className="ml-auto p-2 bg-slate-50 text-slate-400 hover:bg-violet-50 hover:text-violet-500 rounded-xl transition-all">
-          <Share2 size={18} />
         </button>
       </div>
 
