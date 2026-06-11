@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Send, Tag, Plus, X, ImagePlus } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
 import { useApiFetch } from "../../../lib/api";
-import { requireAdmin } from "../../../lib/permissions";
+import { isAdmin, requireAdmin } from "../../../lib/permissions";
 
 interface CreatePostProps {
   onSubmit: (content: string, tagIds: string[], imageData?: string) => void;
@@ -21,6 +21,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
   const api = useApiFetch();
+  const canManageTags = isAdmin(user?.role);
 
   useEffect(() => {
     api<TagOption[]>("/api/tags/").then(({ data }) => setAllTags(data)).catch(() => {});
@@ -109,13 +110,15 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
           >
             <ImagePlus size={18} />
           </button>
-          <button
-            onClick={() => setShowTags((v) => !v)}
-            className={`p-3 rounded-2xl transition-all flex items-center justify-center ${showTags ? "bg-indigo-100 text-indigo-600" : "text-slate-400 hover:text-indigo-500 hover:bg-slate-50"}`}
-            title="Agregar tags"
-          >
-            <Tag size={18} />
-          </button>
+          {canManageTags && (
+            <button
+              onClick={() => setShowTags((v) => !v)}
+              className={`p-3 rounded-2xl transition-all flex items-center justify-center ${showTags ? "bg-indigo-100 text-indigo-600" : "text-slate-400 hover:text-indigo-500 hover:bg-slate-50"}`}
+              title="Agregar tags"
+            >
+              <Tag size={18} />
+            </button>
+          )}
           <button
             onClick={handleSubmit}
             disabled={!value.trim()}
@@ -138,7 +141,7 @@ export default function CreatePost({ onSubmit }: CreatePostProps) {
         </div>
       )}
 
-      {showTags && (
+      {canManageTags && showTags && (
         <div className="px-6 pb-5 border-t border-slate-50 pt-4">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Agregar tags</p>
 

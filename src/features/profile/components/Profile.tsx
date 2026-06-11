@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useApiFetch } from "../../../lib/api";
-import { MapPin, Phone, User as UserIcon, Mail, Info } from "lucide-react";
+import { MapPin, Phone, User as UserIcon, Mail, Info, Camera } from "lucide-react";
 import ProfileHero from "./ProfileHero";
 import ProfileLevelCard from "./ProfileLevelCard";
 import ProfileStatsGrid from "./ProfileStatsGrid";
@@ -237,8 +237,44 @@ export default function Profile() {
             <div className="absolute inset-0 bg-black/40" onClick={closeEdit} />
             <div className="relative mx-auto w-full max-w-lg bg-white rounded-3xl p-8 shadow-2xl border border-slate-100 z-10">
               <h2 className="text-xl font-black mb-6">Editar perfil</h2>
-              
+
               <div className="space-y-4">
+                {/* Foto de perfil */}
+                <div className="flex flex-col items-center gap-2 mb-2">
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-violet-100 bg-violet-50 flex items-center justify-center">
+                      {editForm.avatar ? (
+                        <img src={editForm.avatar} alt={editForm.name || "Avatar"} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-violet-600 font-black text-2xl">
+                          {editForm.name?.[0]?.toUpperCase() ?? "U"}
+                        </span>
+                      )}
+                    </div>
+                    <label
+                      className={`absolute -bottom-1 -right-1 w-8 h-8 rounded-full flex items-center justify-center shadow-md text-white transition-colors ${
+                        isUploadingImage ? "bg-violet-300 cursor-not-allowed" : "bg-[#ae3df7] hover:bg-[#921be2] cursor-pointer"
+                      }`}
+                    >
+                      {isUploadingImage ? (
+                        <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <Camera size={14} />
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                        disabled={isUploadingImage}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs font-medium text-slate-400">
+                    {isUploadingImage ? "Subiendo foto..." : "Toca el icono para cambiar tu foto"}
+                  </p>
+                </div>
+
                 {/* Fila 1: Nombre */}
                 <div>
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">

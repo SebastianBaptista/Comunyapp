@@ -21,9 +21,9 @@ export const XP_BREAKDOWN = [
 ];
 
 export const PROFILE_STATS = [
-  { label: "Días de Racha", value: "15", icon: "flame" as const, bg: "bg-violet-100", iconColor: "text-violet-600" },
-  { label: "Impacto Social", value: "1.2k", icon: "users" as const, bg: "bg-amber-100", iconColor: "text-amber-600" },
-  { label: "Lecciones", value: "48", icon: "book" as const, bg: "bg-violet-100", iconColor: "text-violet-600" },
+  { label: "Días de Racha", value: "Próximamente", icon: "flame" as const, bg: "bg-slate-100", iconColor: "text-slate-400", comingSoon: true },
+  { label: "Impacto Social", value: "Próximamente", icon: "users" as const, bg: "bg-slate-100", iconColor: "text-slate-400", comingSoon: true },
+  { label: "Lecciones", value: "Próximamente", icon: "book" as const, bg: "bg-slate-100", iconColor: "text-slate-400", comingSoon: true },
   { label: "Insignias", value: "8", icon: "trophy" as const, bg: "bg-sky-100", iconColor: "text-sky-600" },
 ];
 

@@ -12,7 +12,7 @@ interface LayoutProps {
 
 const desktopNav = [
   { path: "/muro", label: "Comunidad", icon: <MessageSquare size={20} /> },
-  { path: "/live", label: "En Vivo", icon: <Radio size={20} className="text-red-500" /> },
+  { path: "/live", label: "En Vivo", icon: <Radio size={20} /> },
   { path: "/classroom", label: "Contenido", icon: <BookOpen size={20} /> },
   { path: "/profile", label: "Mi Perfil", icon: <User size={20} /> },
 ];
@@ -80,7 +80,10 @@ export default function Layout({ children, onLogout }: LayoutProps) {
                 <p className="text-xs text-brand-text-muted font-medium capitalize">{user?.role ?? "member"}</p>
               </div>
             </div>
-            <button className="relative p-2.5 rounded-2xl hover:bg-slate-100 text-slate-400 hover:text-indigo-600 transition-colors flex-shrink-0">
+            <button
+              title="Esta función estará disponible próximamente"
+              className="relative p-2.5 rounded-2xl hover:bg-slate-100 text-slate-400 hover:text-indigo-600 transition-colors flex-shrink-0"
+            >
               <Bell size={20} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
             </button>

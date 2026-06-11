@@ -269,7 +269,7 @@ export default function PostCard({ post, index, onReact, onDelete, onEdit, onPin
           </div>
 
           {/* Tags */}
-          {editTags.length > 0 && (
+          {isAdmin(user?.role) && editTags.length > 0 && (
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tags</p>
               <div className="flex flex-wrap gap-2">
