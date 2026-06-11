@@ -585,7 +585,7 @@ export default function Register({ onGoToLogin }: RegisterProps) {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
                         placeholder={countryCode === "+58" ? "04121234567" : "Número sin prefijo"}
-                        maxLength={COUNTRY_CODES.find((c) => c.code === countryCode)?.digits ?? 12}
+                        maxLength={11}
                         className={inputClass}
                       />
                     </div>
