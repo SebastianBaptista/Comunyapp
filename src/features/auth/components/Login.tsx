@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
-import { Mail, Lock, ArrowRight, Github } from "lucide-react";
+import { Mail, Lock, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuth } from "../../../context/AuthContext";
 import { API_BASE } from "../../../lib/api";
@@ -137,11 +137,7 @@ export default function Login({ onGoToRegister }: LoginProps) {
           </form>
 
           <div className="mt-8 pt-8 border-t border-slate-100 flex flex-col items-center">
-            <p className="text-sm text-slate-400 font-medium mb-4">O continúa con</p>
-            <button className="w-full flex items-center justify-center gap-3 py-3 border-2 border-slate-100 rounded-2xl font-bold text-slate-600 hover:bg-slate-50 transition-colors">
-              <Github size={20} /> Github
-            </button>
-            <p className="mt-8 text-sm font-medium text-slate-500">
+            <p className="text-sm font-medium text-slate-500">
               ¿No tienes cuenta?{" "}
               <button onClick={onGoToRegister} className="text-indigo-600 font-bold hover:underline">
                 Regístrate gratis

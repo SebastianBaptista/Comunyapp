@@ -11,7 +11,7 @@ interface LiveSession {
   id: string;
   title: string;
   youtube_url: string;
-  is_active: bool;
+  is_active: boolean;
   created_at: string;
 }
 
