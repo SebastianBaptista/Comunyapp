@@ -67,11 +67,10 @@ export default function LiveView() {
 
   const fetchCurrentLive = useCallback(async () => {
     try {
-      const { data } = await api<LiveSession | null>("/api/lives/active");
-      setLiveSession(data);
-      if (!data) {
-        // Buscar el próximo live programado
-        const { data: all } = await api<LiveSession[]>("/api/lives/");
+      const { data: all } = await api<LiveSession[]>("/api/lives/");
+      const active = all.find((l) => l.isActive) ?? null;
+      setLiveSession(active);
+      if (!active) {
         const upcoming = all
           .filter((l) => !l.isActive && l.scheduledAt && new Date(l.scheduledAt) > new Date())
           .sort((a, b) => new Date(a.scheduledAt!).getTime() - new Date(b.scheduledAt!).getTime());
@@ -88,9 +87,10 @@ export default function LiveView() {
 
   useEffect(() => {
     fetchCurrentLive();
-    const interval = setInterval(fetchCurrentLive, 10000);
+    // 10s cuando hay live activo, 30s cuando no hay (reduce carga en Supabase)
+    const interval = setInterval(fetchCurrentLive, liveSession ? 10_000 : 30_000);
     return () => clearInterval(interval);
-  }, [fetchCurrentLive]);
+  }, [fetchCurrentLive, liveSession?.id]);
 
   const handleCreateLive = async (e: React.FormEvent) => {
     e.preventDefault();
