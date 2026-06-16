@@ -24,6 +24,7 @@ export default defineConfig(({mode}) => {
         '/api': {
           target: env.PYTHON_BACKEND_URL || 'http://localhost:8000',
           changeOrigin: true,
+          ws: true,
         },
       },
     },

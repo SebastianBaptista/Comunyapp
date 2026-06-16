@@ -3,7 +3,9 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  
+
+  --breakpoint-3xl: 1440px;
+
   --color-brand-primary: #ae3df7;
   --color-brand-background: #ffffff;
   --color-brand-border: #e2e8f0;
