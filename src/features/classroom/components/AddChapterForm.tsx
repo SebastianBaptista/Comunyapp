@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Plus } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { Plus, Paperclip, X } from "lucide-react";
 import { useApiFetch } from "../../../lib/api";
 import { useAuth } from "../../../context/AuthContext";
 import { isAdmin } from "../../../lib/permissions";
@@ -15,6 +15,8 @@ export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProp
   const [title, setTitle] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [duration, setDuration] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -30,7 +32,7 @@ export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProp
     setError(null);
 
     try {
-      await api(`/api/courses/${courseId}/chapters`, {
+      const newChapter = await api<{ id: string }>(`/api/courses/${courseId}/chapters`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -40,9 +42,32 @@ export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProp
         }),
       });
 
+      // Upload PDFs if any
+      if (files.length > 0) {
+        for (const file of files) {
+          const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+
+          await api(`/api/admin/classroom/chapters/${newChapter.data.id}/pdfs`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: file.name.replace(/\.[^/.]+$/, ""),
+              fileData: base64,
+              fileName: file.name,
+            }),
+          });
+        }
+      }
+
       setTitle("");
       setVideoUrl("");
       setDuration("");
+      setFiles([]);
       setExpanded(false);
       onAdded();
     } catch (err) {
@@ -96,6 +121,46 @@ export default function AddChapterForm({ courseId, onAdded }: AddChapterFormProp
         placeholder="Duración (ej. 10:00, opcional)"
         className="w-full bg-white rounded-xl py-2.5 px-3 text-sm font-medium outline-none focus:ring-2 focus:ring-violet-200"
       />
+
+      <div className="space-y-2">
+        <input
+          type="file"
+          multiple
+          ref={fileInputRef}
+          onChange={(e) => {
+            if (e.target.files) {
+              setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
+            }
+          }}
+          accept=".pdf,.doc,.docx"
+          className="hidden"
+        />
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border-2 border-dashed border-violet-200 text-violet-600 text-xs font-bold hover:bg-violet-50 w-full justify-center"
+        >
+          <Paperclip size={16} />
+          Adjuntar PDFs o Documentos
+        </button>
+
+        {files.length > 0 && (
+          <div className="space-y-2">
+            {files.map((file, i) => (
+              <div key={i} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200">
+                <span className="text-xs font-medium text-slate-600 truncate flex-1">{file.name}</span>
+                <button
+                  type="button"
+                  onClick={() => setFiles((prev) => prev.filter((_, idx) => idx !== i))}
+                  className="text-slate-400 hover:text-red-500"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {error && <p className="text-xs font-medium text-red-600">{error}</p>}
 
